@@ -1,30 +1,43 @@
 import React from 'react';
-
 import * as util from './utils';
+import * as traversal_helpers from './utils/traversal_helpers';
 
 function App() {
 
-  async function getRmDirections(room_id) {
-    return await util.info.getRmDirections({"room_id": room_id});
-  }
 
-  async function traverseMap() {
+    async function traverseMap() {
     // when traverseMap fires up
     // check if we have curr room in localstorage
     // if not, fetch it from the api and set
     // it in local storage
 
-  
+    // get room we are in from server
     let currRm = await util.info.getCurrRm();
-    if( util.checkIfRoomStored() !== currRm.room_id ) {
-      util.setCurrentRoom(currRm.room_id);
-      console.log(`currRm if stmt : ${currRm}`)
-    }
-    console.log(`currRm : ${currRm}`)
+    traversal_helpers.initialize(currRm)
+  
+    // create/store current room data that
+    // we are in into the db (or not if exists)
+    let storeRoom = await util.info.createRm(currRm)
+    console.log(`storeRoom : `, storeRoom.response)
 
-    // we need room data:
-      // available directions
-      // available treasure
+    // get available directions
+    // using current room id in localstorage
+    let dirs = await traversal_helpers.getRmDirections(currRm.room_id)
+    console.log("dirs : ", dirs)
+
+    // if unexplored dirs exist
+      // add unexplored dirs to an array
+      // pick random idx number between 0 to len(array) - 1
+      // choose randomly generated idx
+    
+    
+
+    
+
+  
+    
+    
+    
 
     // test DIRECTIONS
     // let directions = await getRmDirections(util.checkIfRoomStored())

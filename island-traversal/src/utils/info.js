@@ -57,10 +57,12 @@ async function createRm(room_info) {
     }
     return await axios.post(`${ourHost}/rooms/`, roomVal)
                     .then( res => {
-                        return res.data
+                        console.log(`creatRm res : ${res}`)
+                        return res
                     })
                     .catch( err => {
-                        console.error(err)
+                        console.error(`createRm err : ${err}`)
+                        return err
                     })
 }
 
