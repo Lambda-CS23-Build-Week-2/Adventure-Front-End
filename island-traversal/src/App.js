@@ -1,12 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import * as util from './utils';
 
 function App() {
 
-  function traverseMap() {
+  async function traverseMap() {
+    let currRm;
     // if you don't know where you are
         // init to get room id
+    if( util.checkIfRoomStored() === null ) {
+      console.log("current_room_id not set!")
+      currRm = await util.info.getCurrRm();
+      console.log('currRm',currRm)
+      util.setCurrentRoom(currRm.room_id);
+    } else {
+      console.log( util.checkIfRoomStored() )
+    }
+    
     // create room
     // pick a direction not traveled
         // travel direction
@@ -17,7 +27,8 @@ function App() {
             // store route and travel to room
     // add room
   }
-
+  
+  traverseMap();
 
 
 
