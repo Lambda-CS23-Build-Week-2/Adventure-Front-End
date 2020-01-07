@@ -24,11 +24,22 @@ function App() {
     // using current room id in localstorage
     let dirs = await traversal_helpers.getRmDirections(currRm.room_id)
     console.log("dirs : ", dirs)
+    
 
+    let travelDir = traversal_helpers.chooseDirection(dirs)
+    console.log("travelDir : ", travelDir)
+    
+  
+
+  
     // if unexplored dirs exist
       // add unexplored dirs to an array
       // pick random idx number between 0 to len(array) - 1
       // choose randomly generated idx
+
+    // else run a breadtch first search
+    // for shortest path to a room
+    // with unexplored dirs
     
     
 
