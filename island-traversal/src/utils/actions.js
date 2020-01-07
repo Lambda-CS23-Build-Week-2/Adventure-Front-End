@@ -3,15 +3,19 @@ import * as util from './services';
 const host = 'https://lambda-treasure-hunt.herokuapp.com/api';
 
 async function moveDir(dir) {
-    // console.log('we are at move dir');
-    let moveVal = { 'direction': dir}
-    // console.log('moveVal', moveVal)
-    return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
+    let moveVal =  JSON.stringify({ 'direction': dir})
+    console.log('moveVal', moveVal)
+    return await util.axiosWithAuth().post(`${host}/adv/move/`, { 'direction': dir})
                     .then( res => {
-                        return res.data
+                        let cooldown = res.data.cooldown * 1000
+                        setTimeout(() => {
+                            return res.data
+                        }, cooldown)
+                        // return res.data
                     })
                     .catch( err => {
                         console.error(err)
+                        return err.response
                     })
 }
 

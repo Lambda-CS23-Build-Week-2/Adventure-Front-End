@@ -9,8 +9,14 @@ async function getCurrRm() {
     console.log('get current room', apiKey);
     return await util.axiosWithAuth().get(`${host}/adv/init/`)
                     .then( res => {
-                        console.log(res);
-                        return res.data;
+                        console.log("resolved : ", res);
+                        let cooldownbuddy = res.data.cooldown * 1000
+                        setTimeout(() => {
+                            console.log("getCurrRm timeout finish")
+
+                            return res.data;
+
+                        }, cooldownbuddy)
                     })
                     .catch( err => {
                         console.error(err)

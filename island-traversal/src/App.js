@@ -12,8 +12,16 @@ function App() {
     // it in local storage
 
     // get room we are in from server
-    let currRm = await util.info.getCurrRm();
-    traversal_helpers.initialize(currRm)
+    console.log("before currRm")
+    let currRm = await util.info.getCurrRm(); // set timeout here
+    console.log("after currRm")
+
+    setTimeout(() => {
+      console.log("initializing starship")
+      traversal_helpers.initialize(currRm)
+
+    }, 7000)
+    
   
     // create/store current room data that
     // we are in into the db (or not if exists)
@@ -28,6 +36,49 @@ function App() {
 
     let travelDir = traversal_helpers.chooseDirection(dirs)
     console.log("travelDir : ", travelDir)
+
+    // this sets off a depth first traversal
+    // picking a randomized path
+    // to go down until we run out of 
+    // unexplored directions
+
+    // set current room as previous room in localstorage
+    // set direction we are moving in localstorage
+    let rm_id = util.checkIfRoomStored();
+    util.setPrevRoom(rm_id);
+    util.setTravelDir(travelDir)
+
+    // move to chosen direction
+    console.log("travelDir : ", travelDir)
+    console.log("travelDir : ",typeof travelDir)
+
+    function movement() {
+      console.log("in movement")
+
+      util.actions.moveDir(travelDir)
+    }
+
+    setTimeout(movement, 1500)
+    // let movement = await util.actions.moveDir(travelDir)
+    console.log("movement : ", movement)
+
+
+    
+    
+   
+
+
+
+    // try and create room
+      // see if we have been here before
+      // if yes, then get dirs and move again
+      //if no, create it
+        // get dirs
+
+    
+      
+
+
     
   
 

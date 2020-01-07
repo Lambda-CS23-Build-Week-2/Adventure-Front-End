@@ -2,11 +2,10 @@ import * as util from './index';
 
 async function initialize(currRm) {
     // set current room to localstorage
-    if( parseInt(util.checkIfRoomStored()) !== currRm.room_id ) {
-          util.setCurrentRoom(currRm.room_id);
-          console.log(`currRm if stmt : ${currRm}`)
-    }
-
+        if( parseInt(util.checkIfRoomStored()) !== currRm.room_id ) {
+              util.setCurrentRoom(currRm.room_id);
+              console.log(`currRm if stmt : ${currRm}`)
+        }
   }
 
 async function getRmDirections(room_id) {
@@ -45,7 +44,7 @@ function chooseDirection(dirs) {
     let idx = Math.floor((Math.random() * chooseDirArr.length))
     console.log("idx : ", idx)
 
-    // return chosen directio
+    // return chosen direction
     return chooseDirArr[idx]
 
 }
