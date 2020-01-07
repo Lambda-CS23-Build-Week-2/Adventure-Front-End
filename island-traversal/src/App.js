@@ -17,8 +17,6 @@ function App() {
       currRm = await util.info.getCurrRm();
       // console.log('currRm',currRm)
       util.setCurrentRoom(currRm.room_id);
-    } else {
-      console.log( util.checkIfRoomStored() )
     }
 
     // test DIRECTIONS
