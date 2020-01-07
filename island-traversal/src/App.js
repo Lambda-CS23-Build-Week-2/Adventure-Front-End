@@ -12,16 +12,13 @@ function App() {
     // it in local storage
 
     // get room we are in from server
-    console.log("before currRm")
+    // console.log("before currRm")
     let currRm = await util.info.getCurrRm(); // set timeout here
-    console.log("after currRm")
+    let cooldown = currRm.cooldown * 1000;
+    await util.delay(cooldown);
+    // console.log("after currRm")
 
-    setTimeout(() => {
-      console.log("initializing starship")
-      traversal_helpers.initialize(currRm)
-
-    }, 7000)
-    
+    traversal_helpers.initialize(currRm)
   
     // create/store current room data that
     // we are in into the db (or not if exists)
@@ -52,16 +49,11 @@ function App() {
     console.log("travelDir : ", travelDir)
     console.log("travelDir : ",typeof travelDir)
 
-    function movement() {
-      console.log("in movement")
-
-      util.actions.moveDir(travelDir)
-    }
-
-    setTimeout(movement, 1500)
-    // let movement = await util.actions.moveDir(travelDir)
-    console.log("movement : ", movement)
-
+    let rmMove = await util.actions.moveDir(travelDir)
+    console.log('rmMove', rmMove);
+    cooldown = rmMove.cooldown * 1000;
+    await util.delay(cooldown);
+      console.log('after movement cooldown')
 
     
     

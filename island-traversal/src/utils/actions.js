@@ -7,11 +7,7 @@ async function moveDir(dir) {
     console.log('moveVal', moveVal)
     return await util.axiosWithAuth().post(`${host}/adv/move/`, { 'direction': dir})
                     .then( res => {
-                        let cooldown = res.data.cooldown * 1000
-                        setTimeout(() => {
-                            return res.data
-                        }, cooldown)
-                        // return res.data
+                        return res.data
                     })
                     .catch( err => {
                         console.error(err)

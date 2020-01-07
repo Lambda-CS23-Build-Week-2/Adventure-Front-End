@@ -46,6 +46,15 @@ function checkIfRoomStored() {
     return curRoomId
 }
 
+function delay(n) {  
+    n = n || 2000;
+    return new Promise(done => {
+        setTimeout(() => {
+            done();
+        }, n);
+    });
+}
+
 export {
     setCurrentRoom,
     setPrevRoom,
@@ -54,5 +63,6 @@ export {
     getPrevRoom,
     checkIfRoomStored,
     actions,
-    info
+    info,
+    delay
 }
