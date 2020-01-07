@@ -4,6 +4,10 @@ import * as util from './utils';
 
 function App() {
 
+  async function getRmDirections(room_id) {
+    return await util.info.getRmDirections({"room_id": room_id});
+  }
+
   async function traverseMap() {
     let currRm;
     // if you don't know where you are
@@ -16,7 +20,13 @@ function App() {
     } else {
       console.log( util.checkIfRoomStored() )
     }
-    
+
+    // test DIRECTIONS
+    // let directions = await getRmDirections(util.checkIfRoomStored())
+    // console.log('rmDirections',directions);
+    // let newRoom = await util.actions.moveDir('s')
+    // console.log('NEW ROOM', newRoom)
+
     // create room
     // pick a direction not traveled
         // travel direction

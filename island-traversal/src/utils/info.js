@@ -17,14 +17,20 @@ async function getCurrRm() {
                     })
 }
 
-async function getRmDirections(dir) {
-    return await axios.post(`${ourHost}/rooms/directions/`, {'directions': dir})
+async function getRmDirections(room_id) {
+    // console.log('room_id',room_id)
+    return await axios.post(`${ourHost}/rooms/directions/`, room_id)
                     .then( res => {
-                        console.log(res)
+                        // console.log('getRmDirections', res)
+                        return res.data
                     })
                     .catch( err => {
                         console.error(err)
                     })
+}
+
+async function createRm(room_id) {
+    
 }
 
 export {
