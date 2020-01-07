@@ -9,15 +9,22 @@ function App() {
   }
 
   async function traverseMap() {
-    let currRm;
-    // if you don't know where you are
-        // init to get room id
-    if( util.checkIfRoomStored() === null ) {
-      // console.log("current_room_id not set!")
-      currRm = await util.info.getCurrRm();
-      // console.log('currRm',currRm)
+    // when traverseMap fires up
+    // check if we have curr room in localstorage
+    // if not, fetch it from the api and set
+    // it in local storage
+
+  
+    let currRm = await util.info.getCurrRm();
+    if( util.checkIfRoomStored() !== currRm.room_id ) {
       util.setCurrentRoom(currRm.room_id);
+      console.log(`currRm if stmt : ${currRm}`)
     }
+    console.log(`currRm : ${currRm}`)
+
+    // we need room data:
+      // available directions
+      // available treasure
 
     // test DIRECTIONS
     // let directions = await getRmDirections(util.checkIfRoomStored())
