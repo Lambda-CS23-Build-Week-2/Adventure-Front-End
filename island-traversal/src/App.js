@@ -13,9 +13,9 @@ function App() {
     // if you don't know where you are
         // init to get room id
     if( util.checkIfRoomStored() === null ) {
-      console.log("current_room_id not set!")
+      // console.log("current_room_id not set!")
       currRm = await util.info.getCurrRm();
-      console.log('currRm',currRm)
+      // console.log('currRm',currRm)
       util.setCurrentRoom(currRm.room_id);
     } else {
       console.log( util.checkIfRoomStored() )
@@ -26,6 +26,10 @@ function App() {
     // console.log('rmDirections',directions);
     // let newRoom = await util.actions.moveDir('s')
     // console.log('NEW ROOM', newRoom)
+    // let rm = await util.info.createRm(newRoom);
+    // console.log('createRm return',rm);
+    // let updateDir = await util.info.updateRmDir(2, 0, 'north')
+    // console.log('updateDir',updateDir);
 
     // create room
     // pick a direction not traveled

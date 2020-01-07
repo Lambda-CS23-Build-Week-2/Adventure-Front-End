@@ -29,11 +29,61 @@ async function getRmDirections(room_id) {
                     })
 }
 
-async function createRm(room_id) {
-    
+async function createRm(room_info) {
+    let rmType = '';
+    if (room_info.title === "shop") {
+        rmType = "shop"
+    } else {
+        rmType = "room"
+    }
+    let rmDir = {};
+    if(room_info.exits.includes("n")) {
+        rmDir['north'] = -1
+    }
+    if(room_info.exits.includes("s")) {
+        rmDir['south'] = -1
+    }
+    if(room_info.exits.includes("e")) {
+        rmDir['east'] = -1
+    }
+    if(room_info.exits.includes("w")) {
+        rmDir['west'] = -1
+    }
+    let roomVal = {
+        'room_id': room_info.room_id,
+        'type': rmType,
+        'title': room_info.title,
+        ...rmDir
+    }
+    return await axios.post(`${ourHost}/rooms/`, roomVal)
+                    .then( res => {
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.error(err)
+                    })
+}
+
+async function updateRmDir(room_id, dir_rm_id, direction) {
+    let updateVal = {
+        "room_id": room_id,
+        "dir_room_id": dir_rm_id,
+        "direction": direction
+    }
+    console.log('updateRmDir',updateRmDir);
+    return await axios.post(`${ourHost}/rooms/directions/update`, updateVal)
+                    .then( res => {
+                        console.log('update dir val', res)
+                        return res
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
 }
 
 export {
     getCurrRm,
-    getRmDirections
+    getRmDirections,
+    createRm,
+    updateRmDir
 }
