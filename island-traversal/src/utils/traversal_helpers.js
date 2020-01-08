@@ -27,7 +27,7 @@ function chooseDirection(dirs) {
         chooseDirArr.push('e')
     } 
     if (dirs.west === -1) {
-        chooseDirArr.push('e')
+        chooseDirArr.push('w')
     } 
     console.log("chooseDirArr : ", chooseDirArr)
 
@@ -65,14 +65,14 @@ async function movePlayer(currRm) {
     // get available directions
     // using current room id in localstorage
     console.log('currRm',currRm);
-    if(currRm.items.length > 0) {
-        // console.log('TREASURE!')
-        for(let i = 0; i < currRm.items.length; i++) {
-            let treasureReturn = await util.actions.getTreasure();
-            cooldown = treasureReturn.cooldown * 1000;
-            await util.delay(cooldown);
-        }
-    }
+    // if(currRm.items.length > 0) {
+    //     // console.log('TREASURE!')
+    //     for(let i = 0; i < currRm.items.length; i++) {
+    //         let treasureReturn = await util.actions.getTreasure();
+    //         cooldown = treasureReturn.cooldown * 1000;
+    //         await util.delay(cooldown);
+    //     }
+    // }
 
     let dirs = await getRmDirections(currRm.room_id)
     let travelDir = await chooseDirection(dirs)
