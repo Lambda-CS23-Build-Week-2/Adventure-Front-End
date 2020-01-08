@@ -10,9 +10,8 @@ async function moveDir(dir) {
                         return res.data
                     })
                     .catch( err => {
-                        console.log('error',err)
                         console.error(err)
-                        return err.response.data
+                        return err.response
                     })
 }
 
@@ -26,17 +25,6 @@ async function quickMoveDir(dir, rmId) {
                     .catch( err => {
                         console.error(err)
                         return err.response
-                    })
-}
-
-async function prayAtShrine() {
-    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
-                    .then( res => {
-                        console.log(res)
-                        return res.data
-                    })
-                    .catch( err => {
-                        console.error(err);
                     })
 }
 
@@ -87,7 +75,6 @@ export {
     getTreasure,
     dropTreasure,
     quickMoveDir,
-    prayAtShrine,
     changePlayerName,
     confirmChangePlayerName
 }
