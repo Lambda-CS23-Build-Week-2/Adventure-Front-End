@@ -23,9 +23,9 @@ function App() {
     let storeRoom = await util.info.createRm(currRm)
 
     // move if there are open rooms
-    for(let i = 0; i < 2; i++){
+    for(let i = 0; i < 5; i++){
       cooldown = await traversal_helpers.movePlayer(currRm);
-      console.log("COOLDOWN:", cooldown);
+      // console.log("COOLDOWN:", cooldown);
       await util.delay(cooldown);
 
       //update current room
@@ -57,7 +57,6 @@ function App() {
     // console.log('createRm return',rm);
     // let updateDir = await util.info.updateRmDir(2, 0, 'north')
     // console.log('updateDir',updateDir);
-
     // create room
     // pick a direction not traveled
     // travel direction

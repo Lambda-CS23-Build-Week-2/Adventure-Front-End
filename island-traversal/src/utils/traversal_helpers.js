@@ -1,4 +1,5 @@
 import * as util from './index';
+let count = 0;
 
 async function initialize(currRm) {
     // set current room to localstorage
@@ -37,23 +38,23 @@ function chooseDirection(dirs) {
     return chooseDirArr[idx]
 }
 
-function chooseTraveledDir(dirs) {
+async function chooseTraveledDir(dirs) {
     let revDir = {
         "n":"south",
         "s":"north",
         "w":"east",
         "e":"west"
     }
-    let trvledDir = util.getTravelDir;
-    console.log('trvledDir',trvledDir)
+    let trvledDir = await util.getTravelDir();
     dirs = Object.keys(dirs);
-    let newDir = dirs.filter( dir => dir !== revDir[trvledDir]);
-    console.log('new direction',newDir)
+    let newDir = dirs;
+    if( dirs.length > 1) {
+        newDir = dirs.filter( dir => dir !== revDir[trvledDir]);
+    }
     let idx = Math.floor((Math.random() * newDir.length))
-    console.log("idx : ", idx)
 
     // return chosen direction
-    return newDir[idx].slice(0,1);
+    return newDir[idx];
 }
 
 
@@ -65,7 +66,7 @@ async function movePlayer(currRm) {
     // using current room id in localstorage
     console.log('currRm',currRm);
     if(currRm.items.length > 0) {
-        console.log('TREASURE!')
+        // console.log('TREASURE!')
         for(let i = 0; i < currRm.items.length; i++) {
             let treasureReturn = await util.actions.getTreasure();
             cooldown = treasureReturn.cooldown * 1000;
@@ -74,26 +75,34 @@ async function movePlayer(currRm) {
     }
 
     let dirs = await getRmDirections(currRm.room_id)
-    let travelDir = chooseDirection(dirs)
-    console.log("starting room", currRm.room_id, "travelDir:", travelDir);
+    let travelDir = await chooseDirection(dirs)
+    let longDir = '';
+    // console.log("starting room", currRm.room_id, "travelDir:", travelDir);
     if(travelDir === undefined) {
-        travelDir = chooseTraveledDir(dirs);
-        console.log('travelDir updated to', travelDir);
+        longDir = await chooseTraveledDir(dirs);
+        travelDir = longDir.slice(0,1);
+        // console.log('travelDir updated to', travelDir);
     }
 
     // set current room as previous room in localstorage
     // set direction we are moving in localstorage
     let rm_id = util.checkIfRoomStored();
-    util.setPrevRoom(rm_id);
-    util.setTravelDir(travelDir)
+    await util.setPrevRoom(rm_id);
+    await util.setTravelDir(travelDir)
 
     // move to chosen direction
-    let rmMove = await util.actions.moveDir(travelDir)
-    console.log('New Room',rmMove);
+    let rmMove;
+    if(longDir == "") {
+        rmMove = await util.actions.moveDir(travelDir)
+    } else {
+        let dir_rm_id = dirs[longDir];
+        rmMove = await util.actions.quickMoveDir(travelDir, dir_rm_id)
+    }
+    // console.log('New Room',rmMove);
 
     // try and create room
-    util.setCurrentRoom(rmMove.room_id);
-    await util.info.createRm(rmMove);
+    await util.setCurrentRoom(rmMove.room_id);
+    let rmRes = await util.info.createRm(rmMove);
     const dirObj = {
       "n": "north",
       "s": "south",
@@ -106,14 +115,14 @@ async function movePlayer(currRm) {
       "e": "west",
       "w": "east"
     }
+    // console.log(rmRes)
+    count++
+    console.log('new room',rmMove,`\n~~~~~~COUNT: ${count}~~~~~~~\n`);
+
     const dirTraveled = util.getTravelDir();
-    console.log('update direction',util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])
-    console.log('updatedirection',rmMove.room_id, util.getPrevRoom(), revDirObj[dirTraveled])
     await util.info.updateRmDir(rmMove.room_id, util.getPrevRoom(), revDirObj[dirTraveled])
-    console.log('end update rooms')
     cooldown = rmMove.cooldown * 1000;
-    // await util.delay(cooldown);
     return cooldown
 };
 
