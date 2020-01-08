@@ -25,56 +25,17 @@ function App() {
     let storeRoom = await util.info.createRm(currRm)
     console.log(`storeRoom : `, storeRoom.response)
 
-    // get available directions
-    // using current room id in localstorage
-    let dirs = await traversal_helpers.getRmDirections(currRm.room_id)
-    console.log("dirs : ", dirs)
-    
-
-    let travelDir = traversal_helpers.chooseDirection(dirs)
-    console.log("travelDir : ", travelDir)
-
-    // this sets off a depth first traversal
-    // picking a randomized path
-    // to go down until we run out of 
-    // unexplored directions
-
-    // set current room as previous room in localstorage
-    // set direction we are moving in localstorage
-    let rm_id = util.checkIfRoomStored();
-    util.setPrevRoom(rm_id);
-    util.setTravelDir(travelDir)
-
-    // move to chosen direction
-    console.log("travelDir : ", travelDir)
-    console.log("travelDir : ",typeof travelDir)
-
-    let rmMove = await util.actions.moveDir(travelDir)
-    console.log('rmMove', rmMove);
-    cooldown = rmMove.cooldown * 1000;
-    await util.delay(cooldown);
-      console.log('after movement cooldown')
-
-    
-    
-   
+    for(let i = 0; i < 4; i++){
+      cooldown = await traversal_helpers.movePlayer(currRm);
+      await util.delay(cooldown); 
+    }
 
 
-
-    // try and create room
       // see if we have been here before
       // if yes, then get dirs and move again
       //if no, create it
         // get dirs
 
-    
-      
-
-
-    
-  
-
-  
     // if unexplored dirs exist
       // add unexplored dirs to an array
       // pick random idx number between 0 to len(array) - 1

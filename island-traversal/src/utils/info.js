@@ -6,7 +6,7 @@ const host = 'https://lambda-treasure-hunt.herokuapp.com/api'
 const ourHost = 'https://adventure-island-cs23.herokuapp.com'
 
 async function getCurrRm() {
-    console.log('get current room', apiKey);
+    // console.log('get current room', apiKey);
     return await util.axiosWithAuth().get(`${host}/adv/init/`)
                     .then( res => {
                         // console.log("resolved : ", res);
@@ -57,7 +57,7 @@ async function createRm(room_info) {
     }
     return await axios.post(`${ourHost}/rooms/`, roomVal)
                     .then( res => {
-                        console.log(`creatRm res : ${res}`)
+                        // console.log(`creatRm res : ${res}`)
                         return res
                     })
                     .catch( err => {
@@ -72,10 +72,10 @@ async function updateRmDir(room_id, dir_rm_id, direction) {
         "dir_room_id": dir_rm_id,
         "direction": direction
     }
-    console.log('updateRmDir',updateRmDir);
+    // console.log('updateRmDir',updateRmDir);
     return await axios.post(`${ourHost}/rooms/directions/update`, updateVal)
                     .then( res => {
-                        console.log('update dir val', res)
+                        // console.log('update dir val', res)
                         return res
                     })
                     .catch( err => {
