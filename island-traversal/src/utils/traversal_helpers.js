@@ -27,7 +27,7 @@ function chooseDirection(dirs) {
         chooseDirArr.push('e')
     } 
     if (dirs.west === -1) {
-        chooseDirArr.push('e')
+        chooseDirArr.push('w')
     } 
     console.log("chooseDirArr : ", chooseDirArr)
 
@@ -48,7 +48,7 @@ async function chooseTraveledDir(dirs) {
     let trvledDir = await util.getTravelDir();
     dirs = Object.keys(dirs);
     let newDir = dirs;
-    if( dirs.length > 1) {
+    if( dirs.length > 1 ) {
         newDir = dirs.filter( dir => dir !== revDir[trvledDir]);
     }
     let idx = Math.floor((Math.random() * newDir.length))
@@ -65,6 +65,8 @@ async function movePlayer(currRm) {
     // get available directions
     // using current room id in localstorage
     console.log('currRm',currRm);
+    /*
+    // Get Treasure
     if(currRm.items.length > 0) {
         // console.log('TREASURE!')
         for(let i = 0; i < currRm.items.length; i++) {
@@ -72,6 +74,14 @@ async function movePlayer(currRm) {
             cooldown = treasureReturn.cooldown * 1000;
             await util.delay(cooldown);
         }
+    }
+    //*/
+    let titleLen = currRm.title.length;
+    let isShrine = currRm.title.slice(titleLen-6, titleLen);
+    // console.log(isShrine)
+    if(isShrine === "Shrine") {
+        let prayedAtShrine = await util.actions.prayAtShrine();
+        console.log('PRAYED AT SHRINE',prayedAtShrine);
     }
 
     let dirs = await getRmDirections(currRm.room_id)

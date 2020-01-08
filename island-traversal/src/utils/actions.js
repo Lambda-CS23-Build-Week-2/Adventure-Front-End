@@ -28,6 +28,17 @@ async function quickMoveDir(dir, rmId) {
                     })
 }
 
+async function prayAtShrine() {
+    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
+                    .then( res => {
+                        console.log(res)
+                        return res
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
+}
+
 async function getTreasure() {
     console.log('GET TREASURE!')
     let takeVal = { 'name': 'treasure' }
@@ -50,5 +61,6 @@ export {
     moveDir,
     getTreasure,
     dropTreasure,
-    quickMoveDir
+    quickMoveDir,
+    prayAtShrine
 }
