@@ -3,9 +3,22 @@ import * as util from './services';
 const host = 'https://lambda-treasure-hunt.herokuapp.com/api';
 
 async function moveDir(dir) {
-    let moveVal =  JSON.stringify({ 'direction': dir})
+    let moveVal =  JSON.stringify({ 'direction': dir })
     console.log('moveVal', moveVal)
-    return await util.axiosWithAuth().post(`${host}/adv/move/`, { 'direction': dir})
+    return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
+                    .then( res => {
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.error(err)
+                        return err.response
+                    })
+}
+
+async function quickMoveDir(dir, rmId) {
+    let moveVal =  JSON.stringify({ 'direction': dir, 'next_room_id': rmId.toString() })
+    console.log('moveVal', moveVal)
+    return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
                     .then( res => {
                         return res.data
                     })
@@ -36,5 +49,6 @@ async function dropTreasure() {
 export {
     moveDir,
     getTreasure,
-    dropTreasure
+    dropTreasure,
+    quickMoveDir
 }
