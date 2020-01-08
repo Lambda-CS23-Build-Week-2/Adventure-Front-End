@@ -12,7 +12,9 @@ async function getCurrRm() {
                         return res.data;
                     })
                     .catch( err => {
+                        console.log(err.response)
                         console.error(err)
+                        return err.response.data
                     })
 }
 
@@ -39,6 +41,8 @@ async function createRm(room_info) {
         rmType = "wishing_well"
     } else if (room_info.title === "Pirate Ry's") {
         rmType = "name_changer"
+    } else if (room_info.title === "The Transmogriphier") {
+        rmType = "transmogriphier"
     } else if(isShrine === "Shrine") {
         rmType = "shrine"
     } else {

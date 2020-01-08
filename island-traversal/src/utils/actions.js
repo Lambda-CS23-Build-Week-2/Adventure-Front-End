@@ -10,8 +10,9 @@ async function moveDir(dir) {
                         return res.data
                     })
                     .catch( err => {
+                        console.log('error',err)
                         console.error(err)
-                        return err.response
+                        return err.response.data
                     })
 }
 
@@ -32,7 +33,7 @@ async function prayAtShrine() {
     return await util.axiosWithAuth().post(`${host}/adv/pray/`)
                     .then( res => {
                         console.log(res)
-                        return res
+                        return res.data
                     })
                     .catch( err => {
                         console.error(err);
@@ -57,10 +58,36 @@ async function dropTreasure() {
     return await util.axiosWithAuth().post(`${host}/adv/drop/`, dropVal)
 }
 
+async function changePlayerName(name) {
+    let nameVal = { "name": name}
+    return await util.axiosWithAuth().post(`${host}/adv/change_name`, nameVal)
+                    .then( res => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
+}
+
+async function confirmChangePlayerName(name) {
+    let nameVal = { "name": name, "confirm": "aye" }
+    return await util.axiosWithAuth().post(`${host}/adv/change_name`, nameVal)
+                    .then( res => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
+}
+
 export {
     moveDir,
     getTreasure,
     dropTreasure,
     quickMoveDir,
-    prayAtShrine
+    prayAtShrine,
+    changePlayerName,
+    confirmChangePlayerName
 }

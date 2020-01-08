@@ -82,6 +82,9 @@ async function movePlayer(currRm) {
     if(isShrine === "Shrine") {
         let prayedAtShrine = await util.actions.prayAtShrine();
         console.log('PRAYED AT SHRINE',prayedAtShrine);
+        cooldown = prayedAtShrine.cooldown * 1000;
+        console.log(`Cooldown: ${prayedAtShrine.cooldown}`)
+        await util.delay(cooldown);
     }
 
     if(currRm.title == "Pirate Ry's") {
@@ -91,10 +94,12 @@ async function movePlayer(currRm) {
             let returnConfirm = await util.actions.changePlayerName(wantedName);
             console.log("change name",returnConfirm)
             cooldown = returnConfirm.cooldown * 1000;
+            console.log(`Cooldown: ${returnConfirm.cooldown}`)
             await util.delay(cooldown);
             let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
             console.log("confirmed change name", confirmedReturn);
             cooldown = confirmedReturn.cooldown * 1000;
+            console.log(`Cooldown: ${confirmedReturn.cooldown}`)
             await util.delay(cooldown);
         }
     }
@@ -143,12 +148,13 @@ async function movePlayer(currRm) {
     // console.log(rmRes)
     count++
     console.log('new room',rmMove)
-    console.log(`\n~~~~~~COUNT: ${count}~~~~~~~\n\n`);
 
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])
     await util.info.updateRmDir(rmMove.room_id, util.getPrevRoom(), revDirObj[dirTraveled])
     cooldown = rmMove.cooldown * 1000;
+    console.log(`Cooldown: ${rmMove.cooldown}`)
+    console.log(`\n~~~~~~COUNT: ${count}~~~~~~~\n\n`);
     return cooldown
 };
 
