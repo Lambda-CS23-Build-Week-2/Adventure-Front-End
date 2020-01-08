@@ -27,7 +27,7 @@ function chooseDirection(dirs) {
         chooseDirArr.push('e')
     } 
     if (dirs.west === -1) {
-        chooseDirArr.push('e')
+        chooseDirArr.push('w')
     } 
     console.log("chooseDirArr : ", chooseDirArr)
 
@@ -57,6 +57,15 @@ async function chooseTraveledDir(dirs) {
     return newDir[idx];
 }
 
+async function moveDestination(pathToDest) {
+    for(let i=1; i<pathToDest.length; i++) {
+        let rmData = await util.actions.quickMoveDir(pathToDest[i][0], pathToDest[i][1])
+        let cooldown = rmData.cooldown * 1000
+        console.log(cooldown, 'Current Cooldown')
+        await util.delay(cooldown)
+    }
+}
+
 
 // this sets off a depth first traversal picking a randomized path
 // to go down until we run out of unexplored directions
@@ -65,13 +74,41 @@ async function movePlayer(currRm) {
     // get available directions
     // using current room id in localstorage
     console.log('currRm',currRm);
-    if(currRm.items.length > 0) {
-        // console.log('TREASURE!')
-        for(let i = 0; i < currRm.items.length; i++) {
-            let treasureReturn = await util.actions.getTreasure();
-            cooldown = treasureReturn.cooldown * 1000;
+
+    // ------- GET TREASURE --------
+    // if(currRm.items.length > 0) {
+    //     // console.log('TREASURE!')
+    //     for(let i = 0; i < currRm.items.length; i++) {
+    //         let treasureReturn = await util.actions.getTreasure();
+    //         cooldown = treasureReturn.cooldown * 1000;
+    //         await util.delay(cooldown);
+    //     }
+    // }
+
+    if(currRm.title == "Pirate Ry's") {
+        let playerInv = await util.info.getInv();
+        let wantedName = process.env.REACT_APP_MY_NAME
+        if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
+            let returnConfirm = await util.actions.changePlayerName(wantedName);
+            console.log("change name",returnConfirm)
+            cooldown = returnConfirm.cooldown * 1000;
+            console.log(`Cooldown: ${returnConfirm.cooldown}`)
+            await util.delay(cooldown);
+            console.log(wantedName)
+            let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
+            console.log("confirmed change name", confirmedReturn);
+            cooldown = confirmedReturn.cooldown * 1000;
+            console.log(`Cooldown: ${confirmedReturn.cooldown}`)
             await util.delay(cooldown);
         }
+    }
+
+    let titleLen = currRm.title.length;
+    let isShrine = currRm.title.slice(titleLen-6, titleLen);
+    // console.log(isShrine)
+    if(isShrine === "Shrine") {
+        let prayedAtShrine = await util.actions.prayAtShrine();
+        console.log('PRAYED AT SHRINE',prayedAtShrine);
     }
 
     let dirs = await getRmDirections(currRm.room_id)
@@ -129,5 +166,6 @@ async function movePlayer(currRm) {
 export {
     initialize,
     getRmDirections,
-    movePlayer
+    movePlayer,
+    moveDestination
 }

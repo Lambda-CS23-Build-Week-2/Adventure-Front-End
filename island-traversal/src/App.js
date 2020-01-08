@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
+import * as bsf_move from './utils/bfs_move'
 
 function App() {
     const [inputText, setInputText] = useState();
@@ -20,19 +21,30 @@ function App() {
 
     // create/store current room data that
     // we are in into the db (or not if exists)
-    let storeRoom = await util.info.createRm(currRm)
+
+    // let storeRoom = await util.info.createRm(currRm)
+     
+    // Traversal to Given Destination
+    let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
+    // console.log(bfsPath, 'path for bfs')
+
+    traversal_helpers.moveDestination(bfsPath)
 
     // move if there are open rooms
-    for(let i = 0; i < 5; i++){
-      cooldown = await traversal_helpers.movePlayer(currRm);
-      // console.log("COOLDOWN:", cooldown);
-      await util.delay(cooldown);
+    // Random Traversal
+    // let ct = 0
+    // while (ct < 1) {
 
-      //update current room
-      currRm = await util.info.getCurrRm();
-      cooldown = currRm.cooldown * 1000;
-      await util.delay(cooldown);
-    }
+    //   cooldown = await traversal_helpers.movePlayer(currRm);
+    //   // console.log("COOLDOWN:", cooldown);
+    //   await util.delay(cooldown);
+
+    //   //update current room
+    //   currRm = await util.info.getCurrRm();
+    //   cooldown = currRm.cooldown * 1000;
+    //   await util.delay(cooldown);
+    //   ct++
+    // }
 
     // see if we have been here before
     // if yes, then get dirs and move again

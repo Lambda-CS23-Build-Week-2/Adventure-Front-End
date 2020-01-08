@@ -84,9 +84,21 @@ async function updateRmDir(room_id, dir_rm_id, direction) {
                     })
 }
 
+async function getInv() {
+    return await util.axiosWithAuth().post(`${host}/adv/status/`)
+        .then(res => {
+            console.log('getInv res', res);
+            return res.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
+
 export {
     getCurrRm,
     getRmDirections,
     createRm,
-    updateRmDir
+    updateRmDir,
+    getInv
 }
