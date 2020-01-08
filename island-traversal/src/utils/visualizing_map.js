@@ -2,24 +2,27 @@ function mapInitialize(mappedRooms) {
     let queue = [],
         roomsWithCoord = [],
         dequeuedObj = {},
+        dirObj = {},
         room0 = mappedRooms.filter(room => room['room_id'] === 0);
 
-    console.log('room0', room0)
+    // console.log('room0', room0)
 
     // Enqueue room
     queue.push(room0[0])
-    console.log('room 0 queue', queue)
+    // console.log('room 0 queue', queue)
     // Dequeue room
     dequeuedObj = queue.shift()
-    console.log('dequeued Obj: ', dequeuedObj)
-    console.log('queue --', queue)
+    // console.log('dequeued Obj: ', dequeuedObj)
+    // console.log('queue --', queue)
     // Add to the state of roomsWithCoord with coordinates
     dequeuedObj['coord-X'] = 0
     dequeuedObj['coord-Y'] = 0
-    console.log('dequeued obj coordinates', dequeuedObj)
+    // console.log('dequeued obj coordinates', dequeuedObj)
     roomsWithCoord.push(dequeuedObj)
-    console.log("rooms with coord:", roomsWithCoord)
+    // console.log("rooms with coord:", roomsWithCoord)
     // Enqueue the connected rooms
+    dirObj = dequeuedObj['dir']
+    console.log('dirObj: ', dirObj)
     // Add the connected rooms to roomsWithCoord and give coordinates based off of dequeued room
 
     // Dequeue the next room
