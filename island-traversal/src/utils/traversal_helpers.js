@@ -9,7 +9,7 @@ async function initialize(currRm) {
 }
 
 async function getRmDirections(room_id) {
-    console.log('getRmDirections', room_id);
+    // console.log('getRmDirections', room_id);
     return await util.info.getRmDirections({"room_id":room_id});
 }
 
@@ -29,10 +29,10 @@ function chooseDirection(dirs) {
     if (dirs.west === -1) {
         chooseDirArr.push('w')
     } 
-    console.log("chooseDirArr : ", chooseDirArr)
+    // console.log("chooseDirArr : ", chooseDirArr)
 
     let idx = Math.floor((Math.random() * chooseDirArr.length))
-    console.log("idx : ", idx)
+    // console.log("idx : ", idx)
 
     // return chosen direction
     return chooseDirArr[idx]
@@ -127,7 +127,8 @@ async function movePlayer(currRm) {
     }
     // console.log(rmRes)
     count++
-    console.log('new room',rmMove,`\n~~~~~~COUNT: ${count}~~~~~~~\n`);
+    console.log('new room',rmMove)
+    console.log(`\n~~~~~~COUNT: ${count}~~~~~~~\n\n`);
 
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])

@@ -30,10 +30,17 @@ async function getRmDirections(room_id) {
 
 async function createRm(room_info) {
     let rmType = '';
+    let titleLen = room_info.title.length;
+    let isShrine = room_info.title.slice(titleLen-6, titleLen);
+    
     if (room_info.title === "shop") {
         rmType = "shop"
     } else if (room_info.title === "Wishing Well") {
         rmType = "wishing_well"
+    } else if (room_info.title === "Pirate Ry's") {
+        rmType = "name_changer"
+    } else if(isShrine === "Shrine") {
+        rmType = "shrine"
     } else {
         rmType = "room"
     }
