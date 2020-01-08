@@ -84,6 +84,21 @@ async function movePlayer(currRm) {
         console.log('PRAYED AT SHRINE',prayedAtShrine);
     }
 
+    if(currRm.title == "Pirate Ry's") {
+        let playerInv = await util.info.getInv();
+        let wantedName = process.env.REACT_APP_MY_NAME
+        if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
+            let returnConfirm = await util.actions.changePlayerName(wantedName);
+            console.log("change name",returnConfirm)
+            cooldown = returnConfirm.cooldown * 1000;
+            await util.delay(cooldown);
+            let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
+            console.log("confirmed change name", confirmedReturn);
+            cooldown = confirmedReturn.cooldown * 1000;
+            await util.delay(cooldown);
+        }
+    }
+
     let dirs = await getRmDirections(currRm.room_id)
     let travelDir = await chooseDirection(dirs)
     let longDir = '';
