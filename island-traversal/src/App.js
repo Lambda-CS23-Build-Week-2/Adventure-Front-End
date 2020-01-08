@@ -23,7 +23,7 @@ function App() {
     let storeRoom = await util.info.createRm(currRm)
 
     // move if there are open rooms
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < 500; i++){
       cooldown = await traversal_helpers.movePlayer(currRm);
       console.log("COOLDOWN:", cooldown);
       await util.delay(cooldown);

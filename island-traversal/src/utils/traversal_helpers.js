@@ -1,6 +1,7 @@
 import * as util from './index';
 let count = 0;
 
+
 async function initialize(currRm) {
     // set current room to localstorage
     if( parseInt(util.checkIfRoomStored()) !== currRm.room_id ) {
@@ -38,7 +39,45 @@ function chooseDirection(dirs) {
     return chooseDirArr[idx]
 }
 
-async function chooseTraveledDir(dirs) {
+// choose direction if no unexplored
+async function chooseTraveledDir(dirs) { 
+
+    // create empty queue
+    let q = []
+
+    
+
+
+    // enqueue path to starting room
+    q.push(["starting room here"])
+
+    // while size of queue > 0
+
+    while (q.length > 0) {
+    // dequeue first path
+    path = q.shift()
+
+    // get last room from path
+    vertex = path[path.length - 1]
+
+
+    
+
+
+
+
+
+    }
+    // get last room from path
+
+    // if room hasn't been visited
+    // check if its target of search
+
+
+
+
+
+
     let revDir = {
         "n":"south",
         "s":"north",

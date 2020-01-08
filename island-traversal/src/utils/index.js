@@ -37,7 +37,7 @@ function getPrevRoom() {
     return prevRm
 }
 
-//returns current room, queried in App
+// returns current room, queried in App
 function checkIfRoomStored() {
     let curRoomId = null;
     if(localStorage.getItem("curr_rm_id")) {
