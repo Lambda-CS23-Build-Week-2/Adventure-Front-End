@@ -23,16 +23,19 @@ function App() {
     let storeRoom = await util.info.createRm(currRm)
 
     // move if there are open rooms
-    for(let i = 0; i < 500; i++){
-      cooldown = await traversal_helpers.movePlayer(currRm);
-      console.log("COOLDOWN:", cooldown);
-      await util.delay(cooldown);
+    // for(let i = 0; i < 500; i++){
+      while (true) {
 
-      //update current room
-      currRm = await util.info.getCurrRm();
-      cooldown = currRm.cooldown * 1000;
-      await util.delay(cooldown);
-    }
+        cooldown = await traversal_helpers.movePlayer(currRm);
+        console.log("COOLDOWN:", cooldown);
+        await util.delay(cooldown);
+  
+        //update current room
+        currRm = await util.info.getCurrRm();
+        cooldown = currRm.cooldown * 1000;
+        await util.delay(cooldown);
+      }
+    // }
 
     // see if we have been here before
     // if yes, then get dirs and move again
