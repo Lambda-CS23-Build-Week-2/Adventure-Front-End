@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
+import * as mapUtil from './utils/visualizing_map';
 
 function App() {
   const [inputText, setInputText] = useState();
@@ -66,7 +67,10 @@ function App() {
   Dequeue the next room and check for the connected rooms to enqueue those
 
   */
-  function addCoordinates(rmWithNoCoord) {
+    function addCoordinates(rmWithNoCoord) {
+        let coordArr = mapUtil.mapInitialize(mappedRooms);
+        console.log(coordArr);
+      /*
     let queue = [],
       dequeuedArray = [],
       dequeuedObj = {},
@@ -98,7 +102,7 @@ function App() {
     // Enqueue that connected room
     // Check to see if rooms are not in rooms coordinate array
     // add those rooms to roomsWithCoord and give the coordinates based off of the dequeued room
-
+    //*/
   }
   if (mappedRooms !== undefined) {
     addCoordinates()
