@@ -12,7 +12,9 @@ async function getCurrRm() {
                         return res.data;
                     })
                     .catch( err => {
+                        console.log(err.response)
                         console.error(err)
+                        return err.response.data
                     })
 }
 
@@ -30,10 +32,19 @@ async function getRmDirections(room_id) {
 
 async function createRm(room_info) {
     let rmType = '';
+    let titleLen = room_info.title.length;
+    let isShrine = room_info.title.slice(titleLen-6, titleLen);
+    
     if (room_info.title === "shop") {
         rmType = "shop"
     } else if (room_info.title === "Wishing Well") {
         rmType = "wishing_well"
+    } else if (room_info.title === "Pirate Ry's") {
+        rmType = "name_changer"
+    } else if (room_info.title === "The Transmogriphier") {
+        rmType = "transmogriphier"
+    } else if(isShrine === "Shrine") {
+        rmType = "shrine"
     } else {
         rmType = "room"
     }
@@ -84,9 +95,21 @@ async function updateRmDir(room_id, dir_rm_id, direction) {
                     })
 }
 
+async function getInv() {
+    return await util.axiosWithAuth().post(`${host}/adv/status/`)
+                .then( res => {
+                    console.log('getInv res', res);
+                    return res.data;
+                })
+                .catch( err => {
+                    console.error(err);
+                })
+}
+
 export {
     getCurrRm,
     getRmDirections,
     createRm,
-    updateRmDir
+    updateRmDir,
+    getInv
 }
