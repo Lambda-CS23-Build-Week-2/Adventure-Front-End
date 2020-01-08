@@ -16,8 +16,16 @@ async function moveDir(dir) {
 }
 
 async function getTreasure() {
+    console.log('GET TREASURE!')
     let takeVal = { 'name': 'treasure' }
     return await util.axiosWithAuth().post(`${host}/adv/take/`, takeVal)
+                    .then( res => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .catch( err => {
+                        console.err(err)
+                    })
 }
 
 async function dropTreasure() {
@@ -26,5 +34,7 @@ async function dropTreasure() {
 }
 
 export {
-    moveDir
+    moveDir,
+    getTreasure,
+    dropTreasure
 }

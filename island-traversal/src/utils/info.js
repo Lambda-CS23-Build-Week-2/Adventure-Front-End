@@ -1,7 +1,6 @@
 import * as util from './services';
 import axios from 'axios';
 
-const apiKey = process.env.REACT_APP_API_KEY;
 const host = 'https://lambda-treasure-hunt.herokuapp.com/api'
 const ourHost = 'https://adventure-island-cs23.herokuapp.com'
 
@@ -33,6 +32,8 @@ async function createRm(room_info) {
     let rmType = '';
     if (room_info.title === "shop") {
         rmType = "shop"
+    } else if (room_info.title === "Wishing Well") {
+        rmType = "wishing_well"
     } else {
         rmType = "room"
     }
