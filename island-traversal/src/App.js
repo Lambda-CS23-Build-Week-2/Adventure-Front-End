@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     util.info.getAllRm()
       .then(res => {
-        console.log('setmapped res ', res)
+        // console.log('setmapped res ', res)
         setMappedRooms(res)
       })
 
@@ -57,7 +57,7 @@ function App() {
 
   // traverseMap();
 
-  console.log('mapped rooms ', mappedRooms)
+//   console.log('mapped rooms ', mappedRooms)
 
   /*
   We need one queue and one array without coordinates and one array to store with coordinates
@@ -67,8 +67,8 @@ function App() {
   Dequeue the next room and check for the connected rooms to enqueue those
 
   */
-    function addCoordinates(rmWithNoCoord) {
-        let coordArr = mapUtil.mapInitialize(mappedRooms);
+    async function addCoordinates(rmWithNoCoord) {
+        let coordArr = await mapUtil.mapInitialize(mappedRooms);
         console.log(coordArr);
       /*
     let queue = [],

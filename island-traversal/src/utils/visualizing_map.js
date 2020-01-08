@@ -1,15 +1,29 @@
-function mapInitialize(mappedRooms) {
+function findRoom(mappedRooms, room_id) {
+    console.log("findRoom", mappedRooms)
+    let theIndex = null;
+    let room = mappedRooms.filter( (room, i) => {
+        theIndex = i
+        return room['room_id'] === room_id;
+    });
+    console.log('findroom',room)
+    return [room[0], theIndex]
+}
+
+async function mapInitialize(mappedRooms) {
+    console.log("initialize", mappedRooms)
     let queue = [],
         roomsWithCoord = [],
         dequeuedObj = {},
         dirObj = {},
-        room0 = mappedRooms.filter(room => room['room_id'] === 0);
+        currEvalRoom;
 
     // console.log('room0', room0)
-
+    currEvalRoom = await findRoom(mappedRooms, 0);
+    console.log('currEvalRoom',currEvalRoom)
+    mappedRooms.pop(currEvalRoom[1])
     // Enqueue room
-    queue.push(room0[0])
-    // console.log('room 0 queue', queue)
+    queue.push(currEvalRoom[0])
+    // console.log('queue', queue)
     // Dequeue room
     dequeuedObj = queue.shift()
     // console.log('dequeued Obj: ', dequeuedObj)

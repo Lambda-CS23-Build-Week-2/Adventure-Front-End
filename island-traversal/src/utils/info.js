@@ -19,10 +19,10 @@ async function getCurrRm() {
 }
 
 async function getAllRm() {
-    console.log('Inside getAllRm')
+    // console.log('Inside getAllRm')
     return await util.axiosWithAuth().get(`${ourHost}/rooms`)
         .then(res => {
-            console.log('returning data...', res.data)
+            // console.log('returning data...', res.data)
             return res.data;
         })
         .catch(err => {
