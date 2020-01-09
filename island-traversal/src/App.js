@@ -29,7 +29,7 @@ function App() {
         traversal_helpers.initialize(currRm)
 
         // Traversal to Given Destination
-        let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
+        let bfsPath = await bsf_move.bfs(currRm.room_id, 368)
         // console.log(bfsPath, 'path for bfs')
 
         traversal_helpers.moveDestination(bfsPath)
@@ -61,7 +61,7 @@ function App() {
         // }
     }
 
-    // traverseMap();
+    traverseMap();
 
 
     return (
