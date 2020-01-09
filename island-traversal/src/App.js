@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
+import * as bsf_move from './utils/bfs_move'
 
 function App() {
     const [inputText, setInputText] = useState();

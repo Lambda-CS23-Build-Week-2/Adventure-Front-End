@@ -57,6 +57,15 @@ async function chooseTraveledDir(dirs) {
     return newDir[idx];
 }
 
+async function moveDestination(pathToDest) {
+    for(let i=1; i<pathToDest.length; i++) {
+        let rmData = await util.actions.quickMoveDir(pathToDest[i][0], pathToDest[i][1])
+        let cooldown = rmData.cooldown * 1000
+        console.log(cooldown, 'Current Cooldown')
+        await util.delay(cooldown)
+    }
+}
+
 
 // this sets off a depth first traversal picking a randomized path
 // to go down until we run out of unexplored directions
@@ -166,5 +175,6 @@ async function movePlayer(currRm) {
 export {
     initialize,
     getRmDirections,
-    movePlayer
+    movePlayer,
+    moveDestination
 }
