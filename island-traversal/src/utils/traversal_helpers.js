@@ -61,7 +61,7 @@ async function moveDestination(pathToDest) {
     for(let i=1; i<pathToDest.length; i++) {
         let rmData = await util.actions.quickMoveDir(pathToDest[i][0], pathToDest[i][1])
         let cooldown = rmData.cooldown * 1000
-        console.log(cooldown, 'Current Cooldown')
+        console.log(rmData.cooldown, 'Current Cooldown')
         await util.delay(cooldown)
     }
 }
