@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
+// console.log(apiKey, 'apiKey')
 
 const axiosWithAuth = () => {
     return axios.create({
