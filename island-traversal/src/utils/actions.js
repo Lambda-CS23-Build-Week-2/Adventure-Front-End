@@ -70,11 +70,24 @@ async function confirmChangePlayerName(name) {
                     })
 }
 
+async function mine(proof) {
+    console.log("proof : ", proof)
+    return await util.axiosWithAuth().post(`https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/`, {"proof": proof})
+    .then(res => {
+        console.log("mine res : ",res);
+        return res.data
+    })
+    .catch(err => {
+        console.log("error: ", err);
+    })
+}
+
 export {
     moveDir,
     getTreasure,
     dropTreasure,
     quickMoveDir,
     changePlayerName,
-    confirmChangePlayerName
+    confirmChangePlayerName, 
+    mine
 }
