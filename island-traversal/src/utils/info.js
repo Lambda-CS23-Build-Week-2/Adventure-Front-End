@@ -52,13 +52,11 @@ async function createRm(room_info) {
     }
     let roomVal = {
         'room_id': room_info.room_id,
-        'description': room_info.description,
-        'coordinates': room_info.coordinates,
-        'terrain': room_info.terrain,
-        'elevation': room_info.elevation,
+        'type': rmType,
+        'title': room_info.title,
+        ...rmDir
     }
-    // ourHost = "localhost:8000"
-    return await axios.post(`${ourHost}/rooms/update`, roomVal)
+    return await axios.post(`${ourHost}/rooms/`, roomVal)
                     .then( res => {
                         // console.log(`creatRm res : ${res}`)
                         return res
