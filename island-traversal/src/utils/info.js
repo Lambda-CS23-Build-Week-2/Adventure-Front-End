@@ -19,7 +19,6 @@ async function getCurrRm() {
 }
 
 async function getAllRm() {
-    // console.log('Inside getAllRm')
     return await util.axiosWithAuth().get(`${ourHost}/rooms`)
         .then(res => {
             // console.log('returning data...', res.data)
@@ -91,7 +90,6 @@ async function createRm(room_info) {
             return res
         })
         .catch(err => {
-            // console.error(`createRm err : ${err}`)
             return err.response
         })
 }

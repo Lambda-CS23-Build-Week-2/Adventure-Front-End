@@ -4,6 +4,7 @@ import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
 import * as miner from './utils/miner'
 
+
 function App() {
     const [inputText, setInputText] = useState();
 

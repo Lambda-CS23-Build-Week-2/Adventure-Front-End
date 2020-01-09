@@ -29,6 +29,17 @@ async function mineCoin(new_proof) {
                     })
 }
 
+async function prayAtShrine() {
+    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
+                    .then( res => {
+                        console.log(res)
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
+}
+
 async function moveDir(dir) {
     let moveVal =  JSON.stringify({ 'direction': dir })
     console.log('moveVal', moveVal)
@@ -37,9 +48,8 @@ async function moveDir(dir) {
                         return res.data
                     })
                     .catch( err => {
-                        console.log('error',err)
                         console.error(err)
-                        return err.response.data
+                        return err.response
                     })
 }
 
@@ -53,17 +63,6 @@ async function quickMoveDir(dir, rmId) {
                     .catch( err => {
                         console.error(err)
                         return err.response
-                    })
-}
-
-async function prayAtShrine() {
-    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
-                    .then( res => {
-                        console.log(res)
-                        return res.data
-                    })
-                    .catch( err => {
-                        console.error(err);
                     })
 }
 
@@ -107,6 +106,18 @@ async function confirmChangePlayerName(name) {
                     .catch( err => {
                         console.error(err);
                     })
+}
+
+async function mine(proof) {
+    console.log("proof : ", proof)
+    return await util.axiosWithAuth().post(`https://lambda-treasure-hunt.herokuapp.com/api/bc/mine/`, {"proof": proof})
+    .then(res => {
+        console.log("mine res : ",res);
+        return res.data
+    })
+    .catch(err => {
+        console.log("error: ", err);
+    })
 }
 
 export {
