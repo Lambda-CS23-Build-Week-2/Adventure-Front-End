@@ -73,21 +73,6 @@ async function movePlayer(currRm) {
     let cooldown;
     // get available directions
     // using current room id in localstorage
-<<<<<<< HEAD
-    console.log('currRm',currRm);
-
-    // ------- GET TREASURE --------
-    // if(currRm.items.length > 0) {
-    //     // console.log('TREASURE!')
-    //     for(let i = 0; i < currRm.items.length; i++) {
-    //         let treasureReturn = await util.actions.getTreasure();
-    //         cooldown = treasureReturn.cooldown * 1000;
-    //         await util.delay(cooldown);
-    //     }
-    // }
-
-    if(currRm.title == "Pirate Ry's") {
-=======
     console.log('CURRENT ROOM',currRm);
     /*
     // Get Treasure
@@ -112,7 +97,6 @@ async function movePlayer(currRm) {
     }
 
     if(currRm.title === "Pirate Ry's") {
->>>>>>> 85230c1123df2a45a3323728007df1694efee32e
         let playerInv = await util.info.getInv();
         let wantedName = process.env.REACT_APP_MY_NAME
         if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
@@ -121,10 +105,6 @@ async function movePlayer(currRm) {
             cooldown = returnConfirm.cooldown * 1000;
             console.log(`Cooldown: ${returnConfirm.cooldown}`)
             await util.delay(cooldown);
-<<<<<<< HEAD
-            console.log(wantedName)
-=======
->>>>>>> 85230c1123df2a45a3323728007df1694efee32e
             let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
             console.log("confirmed change name", confirmedReturn);
             cooldown = confirmedReturn.cooldown * 1000;
