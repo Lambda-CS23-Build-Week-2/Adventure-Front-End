@@ -37,13 +37,14 @@ async function moveDir(dir) {
                         return res.data
                     })
                     .catch( err => {
+                        console.log('error',err)
                         console.error(err)
-                        return err.response
+                        return err.response.data
                     })
 }
 
 async function quickMoveDir(dir, rmId) {
-    let moveVal =  JSON.stringify({ 'direction': dir, 'next_room_id': rmId.toString() })
+    let moveVal =  { 'direction': dir, 'next_room_id': rmId.toString() }
     console.log('moveVal', moveVal)
     return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
                     .then( res => {
@@ -52,6 +53,17 @@ async function quickMoveDir(dir, rmId) {
                     .catch( err => {
                         console.error(err)
                         return err.response
+                    })
+}
+
+async function prayAtShrine() {
+    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
+                    .then( res => {
+                        console.log(res)
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.error(err);
                     })
 }
 
@@ -102,6 +114,7 @@ export {
     getTreasure,
     dropTreasure,
     quickMoveDir,
+    prayAtShrine,
     changePlayerName,
     confirmChangePlayerName,
     getLastProof,
