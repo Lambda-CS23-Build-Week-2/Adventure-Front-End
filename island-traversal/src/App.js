@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
-import * as miner from './utils/miner'
+// import * as miner from './utils/miner'
+import Display from "./components/display/Display"
 
 
 function App() {
     const [inputText, setInputText] = useState();
+    const [roomData, setRoomData] = useState()
+    console.log(roomData)
 
-    async function traverseMap() {
-        // when traverseMap fires up check if we have curr room in localstorage
-        // if not, fetch it from the api and set it in local storage
 
+    useEffect(async () => {
         // get room we are in from server
         // console.log("before currRm")
-        let currRm = await util.info.getCurrRm(); // set timeout here
+        let currRm = await util.info.getCurrRm(); 
+        
         let cooldown = currRm.cooldown * 1000;
         console.log(`Cooldown: ${currRm.cooldown}`);
         await util.delay(cooldown);
@@ -24,8 +26,10 @@ function App() {
             console.log(`Cooldown: ${currRm.cooldown}`);
             await util.delay(cooldown);
         }
-        // console.log("after currRm", currRm)
+        // set curr room to state
+        setRoomData(currRm)
 
+        // console.log("after currRm", currRm)
         traversal_helpers.initialize(currRm)
 
         // create/store current room data that
@@ -36,12 +40,25 @@ function App() {
             //     console.log('update room')
             rmRes = await util.info.updateRoom(currRm);
         }
+    }, [])
+
+    async function traverseMap() {
+        // when traverseMap fires up check if we have curr room in localstorage
+        // if not, fetch it from the api and set it in local storage
+
+
         console.log('bfs path')
         // Traversal to Given Destination
-        let bfsPath = await bsf_move.bfs(currRm.room_id, 337)
-        console.log(bfsPath, 'path for bfs')
+        if (roomData !== undefined) {
 
+            
+        let bfsPath = await bsf_move.bfs(roomData.room_id, 292)
+        console.log(bfsPath, 'path for bfs')
+            
         traversal_helpers.moveDestination(bfsPath)
+        }
+
+
 
         //mine function
         //  miner.mineCoins()
@@ -64,9 +81,7 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <h1> Welcome </h1>
-            </header>
+        <Display room={roomData} />
         </div>
     );
 }
