@@ -64,7 +64,7 @@ async function movePlayer(currRm) {
     let cooldown;
     // get available directions
     // using current room id in localstorage
-    console.log('currRm',currRm);
+    console.log('CURRENT ROOM',currRm);
     /*
     // Get Treasure
     if(currRm.items.length > 0) {
@@ -133,6 +133,11 @@ async function movePlayer(currRm) {
     // try and create room
     await util.setCurrentRoom(rmMove.room_id);
     let rmRes = await util.info.createRm(rmMove);
+    // console.log('rmRes',rmRes)
+    if(rmRes.status === 304) {
+        // console.log('update room')
+        rmRes = await util.info.updateRoom(rmMove);
+    }
     const dirObj = {
       "n": "north",
       "s": "south",
@@ -147,7 +152,7 @@ async function movePlayer(currRm) {
     }
     // console.log(rmRes)
     count++
-    console.log('new room',rmMove)
+    console.log('NEW ROOM',rmMove)
 
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])
