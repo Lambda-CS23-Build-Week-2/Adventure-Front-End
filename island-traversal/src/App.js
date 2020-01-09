@@ -27,61 +27,28 @@ function App() {
 
         // create/store current room data that
         // we are in into the db (or not if exists)
-        let storeRoom = await util.info.createRm(currRm)
+        let rmRes = await util.info.createRm(currRm);
+        // console.log('rmRes',rmRes)
+        if(rmRes.status === 304) {
+        //     console.log('update room')
+            rmRes = await util.info.updateRoom(currRm);
+        }
 
         // move if there are open rooms
         // for(let i = 0; i < 1; i++){
         while(true) {
-            cooldown = await traversal_helpers.movePlayer(currRm);
-            // console.log("COOLDOWN:", cooldown);
-            await util.delay(cooldown);
-
             //update current room
             currRm = await util.info.getCurrRm();
             cooldown = currRm.cooldown * 1000;
             await util.delay(cooldown);
+
+            cooldown = await traversal_helpers.movePlayer(currRm);
+            console.log("COOLDOWN:", cooldown/1000);
+            await util.delay(cooldown);
         }
-
-        // see if we have been here before
-        // if yes, then get dirs and move again
-        //if no, create it
-        // get dirs
-
-        // if unexplored dirs exist
-        // add unexplored dirs to an array
-        // pick random idx number between 0 to len(array) - 1
-        // choose randomly generated idx
-
-        // else run a breadtch first search
-        // for shortest path to a room
-        // with unexplored dirs
-        /*
-        // test DIRECTIONS
-        // let directions = await getRmDirections(util.checkIfRoomStored())
-        // console.log('rmDirections',directions);
-        // let newRoom = await util.actions.moveDir('s')
-        // console.log('NEW ROOM', newRoom)
-        // let rm = await util.info.createRm(newRoom);
-        // console.log('createRm return',rm);
-        // let updateDir = await util.info.updateRmDir(2, 0, 'north')
-        // console.log('updateDir',updateDir);
-
-        // create room
-        // pick a direction not traveled
-        // travel direction
-        // if all directions traveled
-        // get all rooms
-        // find room with unexplored directions
-        // find quickest route there
-        // store route and travel to room
-        // add room
-        //*/
     }
   
     traverseMap();
-
-
-
 
     return (
         <div className="App">
