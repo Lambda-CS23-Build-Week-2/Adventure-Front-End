@@ -27,6 +27,13 @@ function App() {
 
         traversal_helpers.initialize(currRm)
 
+        // Traversal to Given Destination
+        let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
+        // console.log(bfsPath, 'path for bfs')
+
+        traversal_helpers.moveDestination(bfsPath)
+
+
         // create/store current room data that
         // we are in into the db (or not if exists)
         let rmRes = await util.info.createRm(currRm);
@@ -41,16 +48,16 @@ function App() {
 
         // move if there are open rooms
         // for(let i = 0; i < 1; i++){
-        while (true) {
-            //update current room
-            currRm = await util.info.getCurrRm();
-            cooldown = currRm.cooldown * 1000;
-            await util.delay(cooldown);
+        // while (true) {
+        //     //update current room
+        //     currRm = await util.info.getCurrRm();
+        //     cooldown = currRm.cooldown * 1000;
+        //     await util.delay(cooldown);
 
-            cooldown = await traversal_helpers.movePlayer(currRm);
-            console.log("COOLDOWN:", cooldown / 1000);
-            await util.delay(cooldown);
-        }
+        //     cooldown = await traversal_helpers.movePlayer(currRm);
+        //     console.log("COOLDOWN:", cooldown / 1000);
+        //     await util.delay(cooldown);
+        // }
     }
 
     // traverseMap();
