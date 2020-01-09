@@ -2,75 +2,59 @@ import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
+import * as miner from './utils/miner'
 
 
 function App() {
     const [inputText, setInputText] = useState();
 
     async function traverseMap() {
-    // when traverseMap fires up check if we have curr room in localstorage
-    // if not, fetch it from the api and set it in local storage
+        // when traverseMap fires up check if we have curr room in localstorage
+        // if not, fetch it from the api and set it in local storage
 
-    // get room we are in from server
-    // console.log("before currRm")
-    let currRm = await util.info.getCurrRm(); // set timeout here
-    let cooldown = currRm.cooldown * 1000;
-    await util.delay(cooldown);
-    // console.log("after currRm")
+        // get room we are in from server
+        // console.log("before currRm")
+        let currRm = await util.info.getCurrRm(); // set timeout here
+        let cooldown = currRm.cooldown * 1000;
+        console.log(`Cooldown: ${currRm.cooldown}`);
+        await util.delay(cooldown);
+        while (!("room_id" in currRm)) {
+            currRm = await util.info.getCurrRm();
+            cooldown = currRm.cooldown * 1000;
+            console.log(`Cooldown: ${currRm.cooldown}`);
+            await util.delay(cooldown);
+        }
+        // console.log("after currRm", currRm)
 
-    traversal_helpers.initialize(currRm)
+        traversal_helpers.initialize(currRm)
 
-    // create/store current room data that
-    // we are in into the db (or not if exists)
+        // create/store current room data that
+        // we are in into the db (or not if exists)
+        let rmRes = await util.info.createRm(currRm);
+        // console.log('rmRes',rmRes)
+        if(rmRes.status === 304) {
+        //     console.log('update room')
+            rmRes = await util.info.updateRoom(currRm);
+        }
+  
+    //mine function
+    //  miner.mineCoins()
 
-    // let storeRoom = await util.info.createRm(currRm)
-     
-    // Traversal to Given Destination
-    let bfsPath = await bsf_move.bfs(currRm.room_id, 358)
-    // console.log(bfsPath, 'path for bfs')
+        // move if there are open rooms
+        // for(let i = 0; i < 1; i++){
+        while(true) {
+            //update current room
+            currRm = await util.info.getCurrRm();
+            cooldown = currRm.cooldown * 1000;
+            await util.delay(cooldown);
 
-    // 169 Fully
-    //243 Linh
-
-    traversal_helpers.moveDestination(bfsPath)
-
-    // move if there are open rooms
-    // Random Traversal
-    // let ct = 0
-    // while (ct < 1) {
-
-    //   cooldown = await traversal_helpers.movePlayer(currRm);
-    //   // console.log("COOLDOWN:", cooldown);
-    //   await util.delay(cooldown);
-
-    //   //update current room
-    //   currRm = await util.info.getCurrRm();
-    //   cooldown = currRm.cooldown * 1000;
-    //   await util.delay(cooldown);
-    //   ct++
-    // }
-
-    /*
-    // test DIRECTIONS
-    // let directions = await getRmDirections(util.checkIfRoomStored())
-    // console.log('rmDirections',directions);
-    // let newRoom = await util.actions.moveDir('s')
-    // console.log('NEW ROOM', newRoom)
-    // let rm = await util.info.createRm(newRoom);
-    // console.log('createRm return',rm);
-    // let updateDir = await util.info.updateRmDir(2, 0, 'north')
-    // console.log('updateDir',updateDir);
-
-   */
-  }
+            cooldown = await traversal_helpers.movePlayer(currRm);
+            console.log("COOLDOWN:", cooldown/1000);
+            await util.delay(cooldown);
+        }
+    }
   
     traverseMap();
-
-
-
-
-
-
 
 
     return (
