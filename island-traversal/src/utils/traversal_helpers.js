@@ -87,7 +87,7 @@ async function movePlayer(currRm) {
         await util.delay(cooldown);
     }
 
-    if(currRm.title == "Pirate Ry's") {
+    if(currRm.title === "Pirate Ry's") {
         let playerInv = await util.info.getInv();
         let wantedName = process.env.REACT_APP_MY_NAME
         if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
@@ -122,7 +122,7 @@ async function movePlayer(currRm) {
 
     // move to chosen direction
     let rmMove;
-    if(longDir == "") {
+    if(longDir === "") {
         rmMove = await util.actions.moveDir(travelDir)
     } else {
         let dir_rm_id = dirs[longDir];
