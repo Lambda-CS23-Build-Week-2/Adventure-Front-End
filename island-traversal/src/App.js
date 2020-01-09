@@ -68,7 +68,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <h1> Welcome </h1>
-                {Rooms}
+                <Rooms />
             </header>
         </div>
     );
