@@ -8,10 +8,8 @@ async function mineCoins() {
 
     ///*
     function valid_proof(last_hash, proof) {
-        // console.log('~~~~~~~~~~~~~valid_proof\n')
         // console.log("difficulty", difficulty, "PROOF", proof)
         let thingToHash = encodeURI(last_hash + proof);
-        // console.log("THING TO HASH", thingToHash)
         let newProofHash = sha256(thingToHash)
         console.log("NEWPROOFHASH", newProofHash)
 

@@ -29,6 +29,17 @@ async function mineCoin(new_proof) {
                     })
 }
 
+async function prayAtShrine() {
+    return await util.axiosWithAuth().post(`${host}/adv/pray/`)
+                    .then( res => {
+                        console.log(res)
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.error(err);
+                    })
+}
+
 async function moveDir(dir) {
     let moveVal =  JSON.stringify({ 'direction': dir })
     console.log('moveVal', moveVal)
