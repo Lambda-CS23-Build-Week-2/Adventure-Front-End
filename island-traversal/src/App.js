@@ -31,29 +31,29 @@ function App() {
         // we are in into the db (or not if exists)
         let rmRes = await util.info.createRm(currRm);
         // console.log('rmRes',rmRes)
-        if(rmRes.status === 304) {
-        //     console.log('update room')
+        if (rmRes.status === 304) {
+            //     console.log('update room')
             rmRes = await util.info.updateRoom(currRm);
         }
-  
-    //mine function
-    //  miner.mineCoins()
+
+        //mine function
+        //  miner.mineCoins()
 
         // move if there are open rooms
         // for(let i = 0; i < 1; i++){
-        while(true) {
+        while (true) {
             //update current room
             currRm = await util.info.getCurrRm();
             cooldown = currRm.cooldown * 1000;
             await util.delay(cooldown);
 
             cooldown = await traversal_helpers.movePlayer(currRm);
-            console.log("COOLDOWN:", cooldown/1000);
+            console.log("COOLDOWN:", cooldown / 1000);
             await util.delay(cooldown);
         }
     }
-  
-    traverseMap();
+
+    // traverseMap();
 
     return (
         <div className="App">
