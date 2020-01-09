@@ -3,8 +3,6 @@ import * as utilAxios from './services';
 // import axios from 'axios'
 const ourHost = 'https://adventure-island-cs23.herokuapp.com'
 
-
-
 async function bfs(currentRoom, desRoom) {
   console.log('inside bfs')
   let rooms = await utilAxios.axiosWithAuth().get(`${ourHost}/rooms/`)
@@ -46,6 +44,8 @@ async function bfs(currentRoom, desRoom) {
       
       } // end first if
     } //end while loop
+
+    return  "Mission Accomplished"
 
 }
 

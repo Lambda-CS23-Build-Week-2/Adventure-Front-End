@@ -9,7 +9,9 @@ import Display from "./components/display/Display"
 function App() {
     const [inputText, setInputText] = useState();
     const [roomData, setRoomData] = useState()
-    console.log(roomData)
+    const [pathData, setPathData] = useState()
+    console.log("pathData : ", pathData)
+    
 
 
     useEffect(async () => {
@@ -49,13 +51,15 @@ function App() {
 
         console.log('bfs path')
         // Traversal to Given Destination
-        if (roomData !== undefined) {
 
+        if (roomData !== undefined) {
             
-        let bfsPath = await bsf_move.bfs(roomData.room_id, 292)
-        console.log(bfsPath, 'path for bfs')
+            let bfsPath = await bsf_move.bfs(roomData.room_id, 1)
             
-        traversal_helpers.moveDestination(bfsPath)
+            
+            console.log(bfsPath, 'path for bfs')
+            
+            traversal_helpers.moveDestination(bfsPath)
         }
 
 
@@ -78,6 +82,10 @@ function App() {
     }
 
     traverseMap();
+
+    if (pathData !== bfsPath) {
+        setPathData(bfsPath)
+    }
 
     return (
         <div className="App">
