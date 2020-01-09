@@ -12,8 +12,8 @@ function Rooms() {
         nodeHighlightBehavior: true,
         staticGraph: true,
         node: {
-            color: "white",
-            size: 300,
+            color: "black",
+            size: 200,
             highlightStrokeColor: "blue",
             renderLabel: true,
         },
@@ -39,8 +39,8 @@ function Rooms() {
 
                     data.nodes.push({
                         id: String(value.room_id),
-                        x: parseInt(coordArray[0] * 10),
-                        y: parseInt(coordArray[1] * 10)
+                        x: parseInt(coordArray[0] * 40),
+                        y: parseInt(coordArray[1] * 40)
                     })
                     // console.log('key', key)
                     // console.log('value', value)
