@@ -85,31 +85,31 @@ async function movePlayer(currRm) {
     //     }
     // }
 
-    if(currRm.title == "Pirate Ry's") {
-        let playerInv = await util.info.getInv();
-        let wantedName = process.env.REACT_APP_MY_NAME
-        if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
-            let returnConfirm = await util.actions.changePlayerName(wantedName);
-            console.log("change name",returnConfirm)
-            cooldown = returnConfirm.cooldown * 1000;
-            console.log(`Cooldown: ${returnConfirm.cooldown}`)
-            await util.delay(cooldown);
-            console.log(wantedName)
-            let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
-            console.log("confirmed change name", confirmedReturn);
-            cooldown = confirmedReturn.cooldown * 1000;
-            console.log(`Cooldown: ${confirmedReturn.cooldown}`)
-            await util.delay(cooldown);
-        }
-    }
+    // if(currRm.title == "Pirate Ry's") {
+    //     let playerInv = await util.info.getInv();
+    //     let wantedName = process.env.REACT_APP_MY_NAME
+    //     if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
+    //         let returnConfirm = await util.actions.changePlayerName(wantedName);
+    //         console.log("change name",returnConfirm)
+    //         cooldown = returnConfirm.cooldown * 1000;
+    //         console.log(`Cooldown: ${returnConfirm.cooldown}`)
+    //         await util.delay(cooldown);
+    //         console.log(wantedName)
+    //         let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
+    //         console.log("confirmed change name", confirmedReturn);
+    //         cooldown = confirmedReturn.cooldown * 1000;
+    //         console.log(`Cooldown: ${confirmedReturn.cooldown}`)
+    //         await util.delay(cooldown);
+    //     }
+    // }
 
-    let titleLen = currRm.title.length;
-    let isShrine = currRm.title.slice(titleLen-6, titleLen);
-    // console.log(isShrine)
-    if(isShrine === "Shrine") {
-        let prayedAtShrine = await util.actions.prayAtShrine();
-        console.log('PRAYED AT SHRINE',prayedAtShrine);
-    }
+    // let titleLen = currRm.title.length;
+    // let isShrine = currRm.title.slice(titleLen-6, titleLen);
+    // // console.log(isShrine)
+    // if(isShrine === "Shrine") {
+    //     let prayedAtShrine = await util.actions.prayAtShrine();
+    //     console.log('PRAYED AT SHRINE',prayedAtShrine);
+    // }
 
     let dirs = await getRmDirections(currRm.room_id)
     let travelDir = await chooseDirection(dirs)

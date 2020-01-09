@@ -25,26 +25,25 @@ function App() {
     // let storeRoom = await util.info.createRm(currRm)
      
     // Traversal to Given Destination
-    let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
+    // let bfsPath = await bsf_move.bfs(currRm.room_id, 119)
     // console.log(bfsPath, 'path for bfs')
 
-    traversal_helpers.moveDestination(bfsPath)
+    // traversal_helpers.moveDestination(bfsPath)
 
     // move if there are open rooms
     // Random Traversal
     // let ct = 0
-    // while (ct < 1) {
+    while (true) {
 
-    //   cooldown = await traversal_helpers.movePlayer(currRm);
-    //   // console.log("COOLDOWN:", cooldown);
-    //   await util.delay(cooldown);
+      cooldown = await traversal_helpers.movePlayer(currRm);
+      // console.log("COOLDOWN:", cooldown);
+      await util.delay(cooldown);
 
-    //   //update current room
-    //   currRm = await util.info.getCurrRm();
-    //   cooldown = currRm.cooldown * 1000;
-    //   await util.delay(cooldown);
-    //   ct++
-    // }
+      //update current room
+      currRm = await util.info.getCurrRm();
+      cooldown = currRm.cooldown * 1000;
+      await util.delay(cooldown);
+    }
 
     // see if we have been here before
     // if yes, then get dirs and move again
