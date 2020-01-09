@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
+import * as miner from './utils/miner'
 
 function App() {
     const [inputText, setInputText] = useState();
@@ -34,6 +35,9 @@ function App() {
         //     console.log('update room')
             rmRes = await util.info.updateRoom(currRm);
         }
+  
+    //mine function
+    //  miner.mineCoins()
 
         // move if there are open rooms
         // for(let i = 0; i < 1; i++){

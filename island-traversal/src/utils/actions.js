@@ -1,6 +1,33 @@
 import * as util from './services';
 
 const host = 'https://lambda-treasure-hunt.herokuapp.com/api';
+const mineHost = 'https://lambda-treasure-hunt.herokuapp.com';
+
+async function getLastProof() {
+    return await util.axiosWithAuth().get(`${mineHost}/api/bc/last_proof`)
+                    .then( res => {
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.log(err.respose)
+                        console.error(err);
+                        return err.response
+                    })
+}
+
+async function mineCoin(new_proof) {
+    let mineVal = { "proof" : new_proof };
+    return await util.axiosWithAuth().post(`${mineHost}/api/bc/mine/`, mineVal)
+                    .then( res => {
+                        console.log('MINE', res)
+                        return res.data
+                    })
+                    .catch( err => {
+                        console.log(err)
+                        console.error(err);
+                        return err.response
+                    })
+}
 
 async function moveDir(dir) {
     let moveVal =  JSON.stringify({ 'direction': dir })
@@ -89,5 +116,7 @@ export {
     quickMoveDir,
     prayAtShrine,
     changePlayerName,
-    confirmChangePlayerName
+    confirmChangePlayerName,
+    getLastProof,
+    mineCoin
 }
