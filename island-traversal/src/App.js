@@ -28,13 +28,6 @@ function App() {
 
         traversal_helpers.initialize(currRm)
 
-        // Traversal to Given Destination
-        let bfsPath = await bsf_move.bfs(currRm.room_id, 368)
-        // console.log(bfsPath, 'path for bfs')
-
-        traversal_helpers.moveDestination(bfsPath)
-
-
         // create/store current room data that
         // we are in into the db (or not if exists)
         let rmRes = await util.info.createRm(currRm);
@@ -43,6 +36,12 @@ function App() {
             //     console.log('update room')
             rmRes = await util.info.updateRoom(currRm);
         }
+        console.log('bfs path')
+        // Traversal to Given Destination
+        let bfsPath = await bsf_move.bfs(currRm.room_id, 337)
+        console.log(bfsPath, 'path for bfs')
+
+        traversal_helpers.moveDestination(bfsPath)
 
         //mine function
         //  miner.mineCoins()
@@ -62,7 +61,6 @@ function App() {
     }
 
     traverseMap();
-
 
     return (
         <div className="App">
