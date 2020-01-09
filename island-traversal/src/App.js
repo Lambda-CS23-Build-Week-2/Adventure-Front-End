@@ -4,6 +4,8 @@ import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
 import * as miner from './utils/miner'
 
+import Rooms from './components/rooms'
+
 
 function App() {
     const [inputText, setInputText] = useState();
@@ -60,12 +62,13 @@ function App() {
         // }
     }
 
-    traverseMap();
+    // traverseMap();
 
     return (
         <div className="App">
             <header className="App-header">
                 <h1> Welcome </h1>
+                {Rooms}
             </header>
         </div>
     );
