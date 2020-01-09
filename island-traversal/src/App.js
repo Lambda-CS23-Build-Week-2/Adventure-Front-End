@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as util from './utils';
 import * as traversal_helpers from './utils/traversal_helpers';
 import * as bsf_move from './utils/bfs_move'
+import * as miner from './utils/miner'
 
 function App() {
     const [inputText, setInputText] = useState();
@@ -25,10 +26,11 @@ function App() {
     // let storeRoom = await util.info.createRm(currRm)
      
     // Traversal to Given Destination
-    let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
-    // console.log(bfsPath, 'path for bfs')
+    // let bfsPath = await bsf_move.bfs(currRm.room_id, 401)
+    // traversal_helpers.moveDestination(bfsPath)
 
-    traversal_helpers.moveDestination(bfsPath)
+    //mine function
+      miner.mineCoins()
 
     // move if there are open rooms
     // Random Traversal
