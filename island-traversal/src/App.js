@@ -40,7 +40,7 @@ function App() {
         }
         console.log('bfs path')
         // Traversal to Given Destination
-        let bfsPath = await bsf_move.bfs(currRm.room_id, 337)
+        let bfsPath = await bsf_move.bfs(currRm.room_id, 53)
         console.log(bfsPath, 'path for bfs')
 
         traversal_helpers.moveDestination(bfsPath)
