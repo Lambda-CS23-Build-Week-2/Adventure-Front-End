@@ -52,11 +52,13 @@ async function createRm(room_info) {
     }
     let roomVal = {
         'room_id': room_info.room_id,
-        'type': rmType,
-        'title': room_info.title,
-        ...rmDir
+        'description': room_info.description,
+        'coordinates': room_info.coordinates,
+        'terrain': room_info.terrain,
+        'elevation': room_info.elevation,
     }
-    return await axios.post(`${ourHost}/rooms/`, roomVal)
+    // ourHost = "localhost:8000"
+    return await axios.post(`${ourHost}/rooms/update`, roomVal)
                     .then( res => {
                         // console.log(`creatRm res : ${res}`)
                         return res
@@ -84,9 +86,21 @@ async function updateRmDir(room_id, dir_rm_id, direction) {
                     })
 }
 
+async function getInv() {
+    return await util.axiosWithAuth().post(`${host}/adv/status/`)
+        .then(res => {
+            console.log('getInv res', res);
+            return res.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
+
 export {
     getCurrRm,
     getRmDirections,
     createRm,
-    updateRmDir
+    updateRmDir,
+    getInv
 }
