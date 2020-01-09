@@ -73,6 +73,7 @@ async function movePlayer(currRm) {
     let cooldown;
     // get available directions
     // using current room id in localstorage
+<<<<<<< HEAD
     console.log('currRm',currRm);
 
     // ------- GET TREASURE --------
@@ -86,6 +87,32 @@ async function movePlayer(currRm) {
     // }
 
     if(currRm.title == "Pirate Ry's") {
+=======
+    console.log('CURRENT ROOM',currRm);
+    /*
+    // Get Treasure
+    if(currRm.items.length > 0) {
+        // console.log('TREASURE!')
+        for(let i = 0; i < currRm.items.length; i++) {
+            let treasureReturn = await util.actions.getTreasure();
+            cooldown = treasureReturn.cooldown * 1000;
+            await util.delay(cooldown);
+        }
+    }
+    //*/
+    let titleLen = currRm.title.length;
+    let isShrine = currRm.title.slice(titleLen-6, titleLen);
+    // console.log(isShrine)
+    if(isShrine === "Shrine") {
+        let prayedAtShrine = await util.actions.prayAtShrine();
+        console.log('PRAYED AT SHRINE',prayedAtShrine);
+        cooldown = prayedAtShrine.cooldown * 1000;
+        console.log(`Cooldown: ${prayedAtShrine.cooldown}`)
+        await util.delay(cooldown);
+    }
+
+    if(currRm.title === "Pirate Ry's") {
+>>>>>>> 85230c1123df2a45a3323728007df1694efee32e
         let playerInv = await util.info.getInv();
         let wantedName = process.env.REACT_APP_MY_NAME
         if(playerInv.gold >= 1000 && playerInv.name !== wantedName) {
@@ -94,21 +121,16 @@ async function movePlayer(currRm) {
             cooldown = returnConfirm.cooldown * 1000;
             console.log(`Cooldown: ${returnConfirm.cooldown}`)
             await util.delay(cooldown);
+<<<<<<< HEAD
             console.log(wantedName)
+=======
+>>>>>>> 85230c1123df2a45a3323728007df1694efee32e
             let confirmedReturn = await util.actions.confirmChangePlayerName(wantedName);
             console.log("confirmed change name", confirmedReturn);
             cooldown = confirmedReturn.cooldown * 1000;
             console.log(`Cooldown: ${confirmedReturn.cooldown}`)
             await util.delay(cooldown);
         }
-    }
-
-    let titleLen = currRm.title.length;
-    let isShrine = currRm.title.slice(titleLen-6, titleLen);
-    // console.log(isShrine)
-    if(isShrine === "Shrine") {
-        let prayedAtShrine = await util.actions.prayAtShrine();
-        console.log('PRAYED AT SHRINE',prayedAtShrine);
     }
 
     let dirs = await getRmDirections(currRm.room_id)
@@ -129,7 +151,7 @@ async function movePlayer(currRm) {
 
     // move to chosen direction
     let rmMove;
-    if(longDir == "") {
+    if(longDir === "") {
         rmMove = await util.actions.moveDir(travelDir)
     } else {
         let dir_rm_id = dirs[longDir];
@@ -140,6 +162,11 @@ async function movePlayer(currRm) {
     // try and create room
     await util.setCurrentRoom(rmMove.room_id);
     let rmRes = await util.info.createRm(rmMove);
+    // console.log('rmRes',rmRes)
+    if(rmRes.status === 304) {
+        // console.log('update room')
+        rmRes = await util.info.updateRoom(rmMove);
+    }
     const dirObj = {
       "n": "north",
       "s": "south",
@@ -154,7 +181,7 @@ async function movePlayer(currRm) {
     }
     // console.log(rmRes)
     count++
-    console.log('new room',rmMove,`\n~~~~~~COUNT: ${count}~~~~~~~\n`);
+    console.log('NEW ROOM',rmMove)
 
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])

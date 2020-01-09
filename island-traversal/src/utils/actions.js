@@ -16,7 +16,7 @@ async function moveDir(dir) {
 }
 
 async function quickMoveDir(dir, rmId) {
-    let moveVal =  JSON.stringify({ 'direction': dir, 'next_room_id': rmId.toString() })
+    let moveVal =  { 'direction': dir, 'next_room_id': rmId.toString() }
     console.log('moveVal', moveVal)
     return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
                     .then( res => {
@@ -87,6 +87,7 @@ export {
     getTreasure,
     dropTreasure,
     quickMoveDir,
+    prayAtShrine,
     changePlayerName,
     confirmChangePlayerName, 
     mine
