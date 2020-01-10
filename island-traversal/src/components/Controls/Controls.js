@@ -10,6 +10,7 @@ const ControlsDisplay = () => {
     const [currRmInfo, setCurrRmInfo] = useState();
     const [inputText, setInputText] = useState();
     const [disableCommands, setDisableCommands] = useState(false);
+    const [isAutoOn, setIsAutoOn] = useState(false);
 
     useEffect( () => {
         async function startup() {
@@ -38,9 +39,35 @@ const ControlsDisplay = () => {
             setCurrRmInfo(currRm)
             setInputText(`${currRm.room_id}: ${currRm.title}\n${currRm.description}\n\nexits: ${currRm.exits} | cooldown: ${currRm.cooldown}sec(s)`)
         }
-
+        
         startup();
     },[])
+
+    async function autoMove(isOn) {
+        let run = isOn;
+        if(run) {
+            console.log("START auto move")
+            setDisableCommands(true);
+            //update current room
+            let currRm = await util.info.getCurrRm();
+            let cooldown = currRm.cooldown * 1000;
+            await util.delay(cooldown);
+        
+            while (run) {
+                console.log("CURR ROOM",currRm, 'is run', run)
+                currRm = await traversal_helpers.movePlayer(currRm);
+                console.log('RETURNED ROOM',currRm);
+                setInputText(`${currRm.room_id}: ${currRm.title}\n${currRm.description}\n\nexits: ${currRm.exits} | cooldown: ${currRm.cooldown}sec(s)`)
+                cooldown = currRm.cooldown * 1000;
+                console.log("COOLDOWN:", currRm.cooldown);
+                await util.delay(cooldown);
+                console.log("END WHILE LOOP")
+            }
+            setDisableCommands(false);
+            console.log("END: auto move")
+        }
+    }
+
 
     useEffect( () => {
         let command = '', returnedRm = null;
@@ -126,6 +153,11 @@ const ControlsDisplay = () => {
                 case "goto":
                     gotoRm(command[command.length-1]);
                     break;
+                case "auto":
+                    setIsAutoOn(!isAutoOn);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -133,11 +165,12 @@ const ControlsDisplay = () => {
 
     // console.log("CurrRmInfo", currRmInfo);
     // console.log("CONTROL INPUT TEXT",inputText)
+    // console.log('isAutoOn', isAutoOn)
 
     return(
         <div id="controls">
             <CommDisplay inputText={inputText} currRmInfo={currRmInfo} setInputText={setInputText} />
-            <CommInput setInputText={setInputText} disableCommands={disableCommands} />
+            <CommInput setInputText={setInputText} disableCommands={disableCommands} setIsAutoOn={setIsAutoOn} autoMove={autoMove} />
         </div>
     )
 }

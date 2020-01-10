@@ -196,10 +196,11 @@ async function movePlayer(currRm) {
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])
     await util.info.updateRmDir(rmMove.room_id, util.getPrevRoom(), revDirObj[dirTraveled])
-    cooldown = rmMove.cooldown * 1000;
-    console.log(`Cooldown: ${rmMove.cooldown}`)
-    console.log(`\n~~~~~~COUNT: ${count}~~~~~~~\n\n`);
-    return cooldown
+    // cooldown = rmMove.cooldown * 1000;
+    // console.log(`Cooldown: ${rmMove.cooldown}`)
+    // console.log(`\n~~~~~~COUNT: ${count}~~~~~~~\n\n`);
+    // return cooldown
+    return rmMove;
 };
 
 export {
