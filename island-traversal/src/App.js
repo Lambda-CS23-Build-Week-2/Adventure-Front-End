@@ -28,7 +28,7 @@ function App() {
         traversal_helpers.initialize(currRm)
 
         // Traversal to Given Destination
-        let bfsPath = await bsf_move.bfs(currRm.room_id, 467)
+        let bfsPath = await bsf_move.bfs(currRm.room_id, 53)
         // console.log(bfsPath, 'path for bfs')
 
         traversal_helpers.moveDestination(bfsPath)
@@ -47,8 +47,7 @@ function App() {
         //  miner.mineCoins()
 
         // move if there are open rooms
-        // for(let i = 0; i < 1; i++){
-        // while (true) {
+        // while (false) {
         //     //update current room
         //     currRm = await util.info.getCurrRm();
         //     cooldown = currRm.cooldown * 1000;
@@ -60,7 +59,7 @@ function App() {
         // }
     }
 
-    // traverseMap();
+    traverseMap();
 
     return (
         <div className="App">
