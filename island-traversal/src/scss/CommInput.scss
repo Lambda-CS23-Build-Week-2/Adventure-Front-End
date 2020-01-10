@@ -1,0 +1,45 @@
+#controls {
+
+    .comm-input {
+        width: 100%;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+
+        form {
+            height: 44px;
+            width: 100%;
+            border-top: 1px solid #666;
+
+            input {
+                width: 80%;
+                height: 100%;
+                padding: 10px;
+                background: rgba(0,0,0,0.95);
+                color: rgb(255,255,255);
+                font: italic 0.875rem/1.25em source-code-pro,'Lucida Console',Monaco,Courier,monospace;
+                appearance: none;
+                border: none;
+
+                &[type="submit"] {
+                    width: 20%;
+                }
+
+                &:disabled {
+                    background: rgb(100,100,100)
+                }
+
+                &:focus::placeholder {
+                    color: rgb(54, 134, 51);
+                }
+
+                &::placeholder {
+                    color: rgb(123, 219, 120);
+                    font: italic 0.875rem/1.25em source-code-pro,'Lucida Console',Monaco,Courier,monospace;
+                    letter-spacing: 0.035rem;
+                }
+            }
+        }
+    }
+
+}

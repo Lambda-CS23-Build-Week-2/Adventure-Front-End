@@ -14,7 +14,7 @@ async function getCurrRm() {
         .catch(err => {
             console.log(err.response)
             console.error(err)
-            return err.response.data
+            return err.response
         })
 }
 

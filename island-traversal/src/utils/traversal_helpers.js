@@ -60,10 +60,40 @@ async function chooseTraveledDir(dirs) {
 async function moveDestination(pathToDest) {
     for(let i=1; i<pathToDest.length; i++) {
         let rmData = await util.actions.quickMoveDir(pathToDest[i][0], pathToDest[i][1])
+        // create/store current room data that
+        // we are in into the db (or not if exists)
+        let rmRes = await util.info.createRm(rmData);
+        // console.log('rmRes',rmRes)
+        if (rmRes.status === 304) {
+            //     console.log('update room')
+            rmRes = await util.info.updateRoom(rmData);
+        }
         let cooldown = rmData.cooldown * 1000
         console.log(rmData.cooldown, 'Current Cooldown')
         await util.delay(cooldown)
     }
+}
+
+async function moveDirection(currRm, dir) {
+    let rmMove = null, translateDir = { "n":"north", "s":"south", "e":"east", "w":"west" };
+    console.log('move direction', dir, 'room', currRm)
+    let dirs = await getRmDirections(currRm.room_id)
+    console.log('room directions',dirs);
+    if (Object.keys(dirs).length > 0 && dirs.constructor === Object && translateDir[dir] in dirs) {
+        let dirRmId = dirs[translateDir[dir]];
+        console.log('direction room id', dirRmId);
+        rmMove = await util.actions.quickMoveDir(dir, dirRmId);
+        console.log('quick move room',rmMove);
+    } else {
+        rmMove = await util.actions.moveDir(dir);
+    }
+    console.log('rmMove',rmMove)
+    return rmMove;
+
+}
+
+async function pray() {
+    return await util.actions.prayAtShrine();
 }
 
 
@@ -74,7 +104,7 @@ async function movePlayer(currRm) {
     // get available directions
     // using current room id in localstorage
     console.log('CURRENT ROOM',currRm);
-    /*
+    ///*
     // Get Treasure
     if(currRm.items.length > 0) {
         // console.log('TREASURE!')
@@ -176,5 +206,7 @@ export {
     initialize,
     getRmDirections,
     movePlayer,
-    moveDestination
+    moveDestination,
+    moveDirection,
+    pray
 }
