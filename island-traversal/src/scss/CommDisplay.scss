@@ -7,16 +7,17 @@
         background: rgba(0,0,0,0.95);
         white-space: pre-wrap;
         color: rgb(255,255,255);
-        text-align: left;
+        text-align: center;
         font: normal normal normal 0.875rem/1.25em ource-code-pro,'Lucida Console',Monaco,Courier,monospace;
         border-top: 1px solid #ccc;
         border-right: 1px solid #ccc;
         border-left: 1px solid #ccc;
-        overflow-x: wrap;
         overflow-y: scroll;
         position: relative;
 
         div {
+            width: 98%;
+            text-align: left;
             position: absolute;
             bottom: 10px;
         }

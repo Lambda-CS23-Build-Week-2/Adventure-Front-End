@@ -45,7 +45,7 @@ async function moveDir(dir) {
 
 async function quickMoveDir(dir, rmId) {
     let moveVal =  { 'direction': dir, 'next_room_id': rmId.toString() }
-    console.log('moveVal', moveVal)
+    // console.log('moveVal', moveVal)
     return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
                     .then( res => {
                         return res.data

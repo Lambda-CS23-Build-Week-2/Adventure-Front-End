@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as util from '../../utils/';
 import * as traversal_helpers from '../../utils/traversal_helpers';
+import * as bsf_move from '../../utils/bfs_move';
 
 import CommDisplay from './CommDisplay/CommDisplay';
 import CommInput from './CommInput/CommInput';
@@ -35,7 +36,7 @@ const ControlsDisplay = () => {
         
             traversal_helpers.initialize(currRm)
             setCurrRmInfo(currRm)
-            setInputText(`${currRm.title}\n${currRm.description}\n\nexits: ${currRm.exits} | cooldown: ${currRm.cooldown}sec(s)`)
+            setInputText(`${currRm.room_id}: ${currRm.title}\n${currRm.description}\n\nexits: ${currRm.exits} | cooldown: ${currRm.cooldown}sec(s)`)
         }
 
         startup();
@@ -46,7 +47,6 @@ const ControlsDisplay = () => {
         if( inputText ) {
             command = inputText.trim()
         }
-        let commReturn = null;
 
         async function movePlayer(dir) {
             setDisableCommands(true);
@@ -61,6 +61,30 @@ const ControlsDisplay = () => {
             cooldown(returnedRm, 'You pray, but nothing happens.');
         }
 
+        async function gotoRm(rmNum) {
+            setDisableCommands(true);
+            let bfsPath = [];
+            // console.log('bfsPath',bfsPath,'rmNum',rmNum)
+            bfsPath = await bsf_move.bfs(currRmInfo.room_id, parseInt(rmNum));
+            // console.log('bfsPath',bfsPath);
+            bfsPath.shift();
+            let tempCurrRm = currRmInfo;
+            while(bfsPath.length > 0) {
+                let nextRm = bfsPath.shift();
+                returnedRm = await traversal_helpers.moveDirection(tempCurrRm, nextRm[0]);
+                // console.log('returnedRm', returnedRm);
+                if(currRmInfo.room_id === returnedRm.room_id) {
+                    setInputText(`You cannot go that way.\n\n${returnedRm.room_id}: ${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`)
+                } else {
+                    setInputText(`${returnedRm.room_id}: ${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`);
+                };
+                tempCurrRm = returnedRm;
+                await util.delay(returnedRm.cooldown * 1000);
+            }
+            setCurrRmInfo(returnedRm);
+            setDisableCommands(false);
+        }
+
         function displayHelp() {
             setInputText(`Commands:\nnorth / south / east / west : Walk in direction\npray : pray at a shrine\n`)
         }
@@ -68,15 +92,15 @@ const ControlsDisplay = () => {
         async function cooldown(returnedRm, error) {
             // console.log('returnedRm', returnedRm);
             if(currRmInfo.room_id === returnedRm.room_id) {
-                setInputText(`${error}\n\n${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`)
+                setInputText(`${error}\n\n${returnedRm.room_id}: ${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`)
             } else {
                 setCurrRmInfo(returnedRm);
-                setInputText(`${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`);
+                setInputText(`${returnedRm.room_id}: ${returnedRm.title}\n${returnedRm.description}\n\nexits: ${returnedRm.exits} | cooldown: ${returnedRm.cooldown}sec(s)`);
             };
             await util.delay(returnedRm.cooldown * 1000);
             setDisableCommands(false);
         }
-        console.log('COMMAND',command)
+        // console.log('COMMAND',command)
         if (command.length === 1) { movePlayer(command); }
         else if (command.length > 1) {
             command = command.split(' ');
@@ -98,6 +122,9 @@ const ControlsDisplay = () => {
                     break;
                 case "pray":
                     pray();
+                    break;
+                case "goto":
+                    gotoRm(command[command.length-1]);
                     break;
             }
         }

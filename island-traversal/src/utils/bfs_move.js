@@ -6,7 +6,7 @@ const ourHost = 'https://adventure-island-cs23.herokuapp.com'
 
 
 async function bfs(currentRoom, desRoom) {
-  // console.log('inside bfs')
+  console.log('inside bfs', currentRoom, desRoom)
   let rooms = await utilAxios.axiosWithAuth().get(`${ourHost}/rooms/`)
   // console.log(rooms, 'rooms')
 
@@ -47,7 +47,7 @@ async function bfs(currentRoom, desRoom) {
     } // end first if
 
   } //end while loop
-
+  return path
 }
 
 export {

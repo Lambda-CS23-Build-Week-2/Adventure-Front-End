@@ -76,18 +76,18 @@ async function moveDestination(pathToDest) {
 
 async function moveDirection(currRm, dir) {
     let rmMove = null, translateDir = { "n":"north", "s":"south", "e":"east", "w":"west" };
-    console.log('move direction', dir, 'room', currRm)
+    // console.log('move direction', dir, 'room', currRm)
     let dirs = await getRmDirections(currRm.room_id)
-    console.log('room directions',dirs);
+    // console.log('room directions',dirs);
     if (Object.keys(dirs).length > 0 && dirs.constructor === Object && translateDir[dir] in dirs) {
         let dirRmId = dirs[translateDir[dir]];
-        console.log('direction room id', dirRmId);
+        // console.log('direction room id', dirRmId);
         rmMove = await util.actions.quickMoveDir(dir, dirRmId);
-        console.log('quick move room',rmMove);
+        // console.log('quick move room',rmMove);
     } else {
         rmMove = await util.actions.moveDir(dir);
     }
-    console.log('rmMove',rmMove)
+    // console.log('rmMove',rmMove)
     return rmMove;
 
 }
