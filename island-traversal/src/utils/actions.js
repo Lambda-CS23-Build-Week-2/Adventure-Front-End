@@ -31,7 +31,7 @@ async function mineCoin(new_proof) {
 
 async function moveDir(dir) {
     let moveVal =  JSON.stringify({ 'direction': dir })
-    console.log('moveVal', moveVal)
+    // console.log('moveVal', moveVal)
     return await util.axiosWithAuth().post(`${host}/adv/move/`, moveVal)
                     .then( res => {
                         return res.data
@@ -109,6 +109,30 @@ async function confirmChangePlayerName(name) {
                     })
 }
 
+async function sellTreasure() {
+    return await util.axiosWithAuth().post(`${host}/adv/sell/`, {"name":"treasure"})
+                    .then( res => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .catch( err => {
+                        console.error(err);
+                        return err.response
+                    })
+}
+
+async function confirmSellTreasure() {
+    return await util.axiosWithAuth().post(`${host}/adv/sell/`, {"name":"treasure", "confirm":"yes"})
+                    .then( res => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .catch( err => {
+                        console.error(err);
+                        return err.response
+                    })
+}
+
 export {
     moveDir,
     getTreasure,
@@ -118,5 +142,7 @@ export {
     changePlayerName,
     confirmChangePlayerName,
     getLastProof,
-    mineCoin
+    mineCoin,
+    sellTreasure,
+    confirmSellTreasure
 }

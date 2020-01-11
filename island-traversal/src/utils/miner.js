@@ -2,18 +2,19 @@ import * as actions from './actions';
 import * as util from './index';
 import { sha256 } from 'js-sha256';
 
-async function mineCoins() {
+async function mineCoins(setInputText) {
     let difficulty = 0;
-    console.log("mine coins")
+    // console.log("mine coins")
 
     ///*
     function valid_proof(last_hash, proof) {
         // console.log('~~~~~~~~~~~~~valid_proof\n')
         // console.log("difficulty", difficulty, "PROOF", proof)
+        let checked = {};
         let thingToHash = encodeURI(last_hash + proof);
         // console.log("THING TO HASH", thingToHash)
         let newProofHash = sha256(thingToHash)
-        console.log("NEWPROOFHASH", newProofHash)
+        // console.log("NEWPROOFHASH", newProofHash)
 
 
         let firstCheck = newProofHash.slice(0, difficulty);
@@ -21,7 +22,7 @@ async function mineCoins() {
         for(let i = 0; i < difficulty; i++) {
             checkAgainst += "0"
         }
-        console.log("checkAgainst",checkAgainst,"firstCheck",firstCheck, "bool", checkAgainst === firstCheck)
+        // console.log("checkAgainst", checkAgainst,"\nfirstCheck\t",firstCheck, "\nbool\t", checkAgainst === firstCheck)
 
         return firstCheck === checkAgainst
     }
@@ -32,22 +33,24 @@ async function mineCoins() {
         let my_Rand = Math.random()
         let my_multi = Math.round(10000 * Math.random())
         let proof = my_Rand * my_multi
-        console.log('proof', proof)
+        // console.log('proof', proof)
         let run = true
         while (run) {
+            setInputText(`Trying proof: ${proof}`)
             // console.log('PROOF',proof)
             let isValid = valid_proof(last_proof, proof)
             if (!isValid) {
-                my_Rand = Math.random()
-                my_multi = Math.round(10000 * Math.random())
-                proof = my_Rand * my_multi
+                // my_Rand = Math.random()
+                // my_multi = Math.round(10000 * Math.random())
+                // proof = my_Rand * my_multi
+                proof++
             } else {
                 run = false;
                 // console.log('THE PROOF', proof)
             }
             count++
-            console.log("COUNT:",count)
-            await util.delay(75);
+            // console.log("COUNT:",count)
+            await util.delay(1);
             
         }
         console.log('PoW: found proof', proof)

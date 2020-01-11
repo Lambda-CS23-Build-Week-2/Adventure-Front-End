@@ -103,8 +103,8 @@ async function movePlayer(currRm) {
     let cooldown;
     // get available directions
     // using current room id in localstorage
-    console.log('CURRENT ROOM',currRm);
-    ///*
+    // console.log('CURRENT ROOM',currRm);
+    /*
     // Get Treasure
     if(currRm.items.length > 0) {
         // console.log('TREASURE!')
@@ -115,6 +115,7 @@ async function movePlayer(currRm) {
         }
     }
     //*/
+    /*
     let titleLen = currRm.title.length;
     let isShrine = currRm.title.slice(titleLen-6, titleLen);
     // console.log(isShrine)
@@ -125,7 +126,8 @@ async function movePlayer(currRm) {
         console.log(`Cooldown: ${prayedAtShrine.cooldown}`)
         await util.delay(cooldown);
     }
-
+    //*/
+    /*
     if(currRm.title === "Pirate Ry's") {
         let playerInv = await util.info.getInv();
         let wantedName = process.env.REACT_APP_MY_NAME
@@ -142,7 +144,7 @@ async function movePlayer(currRm) {
             await util.delay(cooldown);
         }
     }
-
+    //*/
     let dirs = await getRmDirections(currRm.room_id)
     let travelDir = await chooseDirection(dirs)
     let longDir = '';
@@ -191,7 +193,7 @@ async function movePlayer(currRm) {
     }
     // console.log(rmRes)
     count++
-    console.log('NEW ROOM',rmMove)
+    // console.log('NEW ROOM',rmMove)
 
     const dirTraveled = util.getTravelDir();
     await util.info.updateRmDir(util.getPrevRoom(), rmMove.room_id, dirObj[dirTraveled])

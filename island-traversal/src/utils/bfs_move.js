@@ -1,4 +1,3 @@
-import * as util from './index';
 import * as utilAxios from './services';
 // import axios from 'axios'
 const ourHost = 'https://adventure-island-cs23.herokuapp.com'
@@ -6,7 +5,7 @@ const ourHost = 'https://adventure-island-cs23.herokuapp.com'
 
 
 async function bfs(currentRoom, desRoom) {
-  console.log('inside bfs', currentRoom, desRoom)
+  // console.log('inside bfs', currentRoom, desRoom)
   let rooms = await utilAxios.axiosWithAuth().get(`${ourHost}/rooms/`)
   // console.log(rooms, 'rooms')
 
@@ -18,7 +17,7 @@ async function bfs(currentRoom, desRoom) {
 
   while(q.length > 0) {
     path = q.shift()
-    console.log('TRAVEL PATH', path);
+    // console.log('TRAVEL PATH', path);
     let v;
     if (!Array.isArray(path[path.length -1])) {
       v = path[path.length - 1]

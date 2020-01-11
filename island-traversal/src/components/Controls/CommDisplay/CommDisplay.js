@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 const CommandDisplay = props => {
     const [displayComm, setDisplayComm] = useState();
 
+    function setScrollToBottom() {
+        let el = document.querySelector(".shell")
+        // console.log('scroll to bottom');
+        setTimeout(() => { el.scrollTop = el.scrollHeight + 44}, 100)
+    }
+
     useEffect( () => {
         let newCommands =''
         if (displayComm && props.inputText) {
@@ -13,13 +19,17 @@ const CommandDisplay = props => {
             newCommands = `\n\n${props.inputText}`;
         }
         setDisplayComm(newCommands);
+        // console.log("going to scroll to btm")
+        setScrollToBottom();
         props.setInputText('')
     }, [props.inputText])
 
     return (
         <div className="comm-display">
-            <div>
-                {displayComm}
+            <div className="shell">
+                <div>
+                    {displayComm}
+                </div>
             </div>
         </div>
     )

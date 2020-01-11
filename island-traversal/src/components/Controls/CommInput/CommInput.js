@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const CommandInput = props => {
     const [inputText, setInputText] = useState('');
     const [disabled, setDisabled] = useState(false);
+    const [autoMoveOn, setAutoMoveOn] = useState(false);
 
     useEffect( () => {
         setDisabled(props.disableCommands);
@@ -23,8 +24,9 @@ const CommandInput = props => {
     }
 
     const autoOnClickHandler = () => {
-        console.log("props.isAutoOn", props.isAutoOn)
         props.setIsAutoOn(!props.isAutoOn);
+        setAutoMoveOn(!autoMoveOn)
+        console.log("CHANGE props.isAutoOn", props.isAutoOn)
     }
 
     return (
@@ -33,7 +35,7 @@ const CommandInput = props => {
                 <input disabled={disabled} type="text" id="commLine" placeholder="type 'help' for commands" onChange={onChangeHandler} value={inputText} />
                 <input disabled={disabled} type="submit" value="Enter" />
             </form>
-            <div onClick={autoOnClickHandler}>turn on auto-move</div>
+            <div id="automove" data-ison={autoMoveOn} onClick={autoOnClickHandler}>turn on auto-move</div>
         </div>
     )
 }
