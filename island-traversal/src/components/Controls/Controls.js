@@ -127,7 +127,7 @@ const ControlsDisplay = () => {
         }
 
         function displayHelp() {
-            setInputText(`Commands:\nnorth / south / east / west : Walk in direction\npray : pray at a shrine\ngoto <room id> : auto travel to room with <room id>\n`)
+            setInputText(`Commands:\nnorth / south / east / west : walk in direction\npray : pray at a shrine\ngoto <room id> : auto travel to room with <room id>\nsell : auto sell treasure\nstatus : show player stats\ninventory : show player inventory\nmine : mine a Lambda coin\n`)
         }
 
         async function getInventory() {
