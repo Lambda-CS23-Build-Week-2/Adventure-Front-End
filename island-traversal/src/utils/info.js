@@ -1,8 +1,8 @@
 import * as util from './services';
 import axios from 'axios';
 
-const host = 'https://lambda-treasure-hunt.herokuapp.com/api'
-const ourHost = 'https://adventure-island-cs23.herokuapp.com'
+const host = 'http://l-t-h.herokuapp.com/'; //https://lambda-treasure-hunt.herokuapp.com/api'
+const ourHost = 'https://adventure-island-cs23.herokuapp.com';
 
 async function getCurrRm() {
     // console.log('get current room', apiKey);

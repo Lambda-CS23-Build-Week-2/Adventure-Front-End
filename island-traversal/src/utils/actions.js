@@ -1,6 +1,6 @@
 import * as util from './services';
 
-const host = 'https://lambda-treasure-hunt.herokuapp.com/api';
+const host = 'http://l-t-h.herokuapp.com/'; //'https://lambda-treasure-hunt.herokuapp.com/api';
 const mineHost = 'https://lambda-treasure-hunt.herokuapp.com';
 
 async function getLastProof() {
